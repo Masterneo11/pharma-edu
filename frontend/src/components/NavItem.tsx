@@ -8,9 +8,9 @@ interface NavItemProps {
 
 const NavItem: React.FC<NavItemProps> = ({ name, path }) => {
   return (
-    <li>
+    <div>
       <Link to={path}>{name}</Link>
-    </li>
+    </div>
   );
 };
 
