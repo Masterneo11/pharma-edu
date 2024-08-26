@@ -24,7 +24,6 @@ const Doctors: React.FC = () => {
 
   return <>
     <div>
-
       <div className='homeformat'>
         <div className='BeginningHomePage'></div>
         <div className='EnterNewRxInfo'>
