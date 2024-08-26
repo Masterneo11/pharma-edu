@@ -53,7 +53,7 @@
   
   
 body {
-  margin-top: -100px;
+  margin-top: 100px;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -77,6 +77,8 @@ body {
   height: 500px;
   margin-top: 0px;
   display: flex;
+  justify-content: center;
+  align-items: center;
   background-color: #ffffff;
   border: 1px solid black;
 
@@ -267,6 +269,17 @@ img:nth-child(2) {
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 
 }
+.Radnew {
+  background-color: #eeeeee;
+  margin-left: 20px;
+  border-radius: 50px;
+  border: 2px solid #ccc;
+  font-size: 16px;
+  outline: none;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+
+}
 .EnterNewRxInfo {
   display: flex;
   margin-top: 20px;
@@ -422,7 +435,7 @@ ul{
 }
 .homepagerightside {
   border: 1.1px solid rgb(0, 0, 0);
-  height: 518px;
+  height: 500px;
   width: 720px;
   background-color: #ffffff;
 
@@ -439,7 +452,7 @@ ul{
   flex-direction: column;
   align-items: center;
   padding-top: 80px;
-  height: 438px;
+  height: 420px;
   width: 720px;
   border: 1.1px solid rgb(0, 0, 0);
   background-color: white;

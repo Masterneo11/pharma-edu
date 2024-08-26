@@ -24,10 +24,35 @@ const NewRx: React.FC = () => {
   // const handleClick = (event: React.MouseEvent<HTMLButtonElement, MouseEvent>): void => {
   //   event.preventDefault();
   // }
+
+
+
+  //  const handleClick = (event: React.MouseEvent<HTMLButtonElement, MouseEvent>): void => { 
+
+  //   event.preventDefault();
+  //   rxQuantity 
+
+  //   const response = await fetch("http://localhost:8000/rx-items", {
+  //     method: "POST",
+  //     body: JSON.stringify({  
+  //       name: str
+  //       strength: str
+  //       ndc: str
+  //       expiration: date | None = None
+  //       lot_number: str
+  //       dea_schedule: str | None = None
+  //       drug_class: str | None = None }),
+
+
+  //   });
+  //  }
+
+
+
   return (
     <> <div>
       <div className='homeformat'>
-        <div className='BeginningHomePage'></div>
+        {/* <div className='BeginningHomePage'></div> */}
         <div className='EnterNewRxInfo'>
           <div className='Patient-Search'>
             <QuickSearch Word='Patient Name' /> <button className='modal-search-button' onClick={openModal}>🔍</button><PatientModal isOpen={isModalOpen} onRequestClose={closeModal} />

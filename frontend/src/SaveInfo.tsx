@@ -1,13 +1,18 @@
 import React from 'react';
 
-interface interfaceSaveInfo {
-    Save: string
+type interfaceSaveInfo = {
+    Save: string;
+    onClick?: (event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => void;
+
 }
-const SaveInfo: React.FC<interfaceSaveInfo> = ({ Save }) => {
+const SaveInfo: React.FC<interfaceSaveInfo> = ({ Save, onClick }) => {
     return (
-        <div className='Savediv'>
-            <button className='Save'>{Save}</button>
-        </div>
+        <button onClick={onClick} className="save-button">
+            {Save}
+        </button>
     );
 }
 export default SaveInfo;
+
+
+

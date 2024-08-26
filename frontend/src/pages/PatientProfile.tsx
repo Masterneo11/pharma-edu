@@ -20,7 +20,7 @@ const PatientProfile: React.FC = () => {
   return <>
     <div>
       <div className='homeformat'>
-        <div className='BeginningHomePage'></div>
+        {/* <div className='BeginningHomePage'></div> */}
         <div className='EnterNewRxInfo'>
           <div className='patient-profile-fields'>
             <NameField Name='Last name' value={lastName} onChange={(e) => setLastName(e.target.value)} className="Rad" />

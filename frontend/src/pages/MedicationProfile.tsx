@@ -12,7 +12,7 @@ const MedicationProfile: React.FC = () => {
     return <>
         <div>
             <div className='homeformat'>
-                <div className='BeginningHomePage'></div>
+                {/* <div className='BeginningHomePage'></div> */}
                 <div className='EnterNewRxInfo'>
                     <div className='patient-profile-fields'>
                         <NameField Name='Rx  Name' className="Rad" value={rxName} onChange={(e) => setRxName(e.target.value)} />
