@@ -7,12 +7,9 @@ const NewPatient: React.FC = () => {
     const [lastName, setLastName] = useState<string>("");
     const [firstName, setFirstName] = useState<string>("");
     const [dob, setDob] = useState<string>("");
-    // const [primaryDr, setprimaryDR] = useState<string>("");
     const [allergies, setAllergies] = useState<string>("");
-    // const [editAllergies, seteditAllergies] = useState<string>("");
     const [Bin, setBin] = useState<string>("");
     const [PCN, setPCN] = useState<string>("");
-    // const [personCode, setPersonCode] = useState<string>("");
     const [IdNumber, setIdNumber] = useState<string>("");
     const [GroupNumber, setGroupNumber] = useState<string>("");
     const [street, setStreet] = useState<string>("");
@@ -22,7 +19,6 @@ const NewPatient: React.FC = () => {
     const [insuranceName, setinsuranceName] = useState<string>("");
     const [prescriptions, setPresriptions] = useState<string>("");
     const [batch, setpatientinfo] = useState<string>("");
-
 
     // Utility functions to handle type conversions
     const handleStringChange = (setStateFunction: React.Dispatch<React.SetStateAction<string>>) =>
@@ -40,7 +36,6 @@ const NewPatient: React.FC = () => {
 
     const handleClick = async (event: React.MouseEvent<HTMLButtonElement, MouseEvent>): Promise<void> => {
         event.preventDefault();
-
         const response = await fetch("http://localhost:8000/patients", {
             method: "POST",
             headers: {
@@ -63,18 +58,12 @@ const NewPatient: React.FC = () => {
                 insurance_rx_pcn: PCN || null,
             }),
         });
-
         if (response.ok) {
             console.log("Patient information saved successfully.");
         } else {
             console.error("Failed to save patient information.");
         }
-
     };
-
-
-
-
     return (<> <div><div className='homeformat'><div className='EnterNewRxInfo'><div className='patient-profile-fields'>
         <NameField Name='Last name' value={lastName} onChange={handleStringChange(setLastName)} className="Rad" />
         <NameField Name='First name' value={firstName} onChange={handleStringChange(setFirstName)} className="Rad" />
@@ -85,7 +74,7 @@ const NewPatient: React.FC = () => {
         <NameField Name='State' value={state} onChange={handleStringChange(setState)} className="Rad" />
         <NameField Name='Zipcode' value={zipcode} onChange={handleStringChange(setZipCode)} className="Rad" />
     </div>
-        <div className='bottomfields'> <Save Save='Save' />  <Save Save='enter' /></div>
+        <div className='bottomfields'> <Save Save='Save' onClick={handleClick} />  <Save Save='enter' /></div>
     </div>
         <div className="patient-profile-right-side">
             <div className="patientlist">
@@ -98,9 +87,6 @@ const NewPatient: React.FC = () => {
                     <NameField Name='Prescriptions' value={prescriptions} onChange={handleStringChange(setPresriptions)} className="Rad" />
                 </div>
             </div>
-        </div>
-        <div className='bottomfields'>
-            <Save Save='Save' onClick={handleClick} />
         </div>
     </div>
     </div>

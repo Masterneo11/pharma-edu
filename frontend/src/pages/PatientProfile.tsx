@@ -46,6 +46,7 @@ const PatientProfile: React.FC = () => {
               <NameField Name='Group #' value={GroupNumber} onChange={(e) => setGroupNumber(e.target.value)} className="Rad" />
             </div>
             <div className="patient-profile-list">
+
               <div className="patientlistsearchbar"><div className="patientlistdob">Patient Name</div><div className="patientlistname">DOB</div></div>
               <div className="patientlistsearchbar"><div className="patientlistdob">Bob Smith</div><div className="patientlistname">05-08-2008</div></div>
               <div className="patientlistsearchbar"><div className="patientlistdob">Jack williams</div><div className="patientlistname">10-9-1950</div></div>

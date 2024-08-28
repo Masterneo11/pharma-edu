@@ -2,7 +2,7 @@ import Home from "./pages/Home";
 import NewRx from "./pages/NewRx";
 import Patient from "./pages/PatientProfile";
 import Doctors from "./pages/Doctors";
-import medsprofile from "./pages/MedicationProfile";
+import medsprofile from "./pages/RxItem";
 import newPatient from "./pages/NewPatient";
 
 interface PharmacyRoutes {
@@ -18,7 +18,7 @@ const routes: PharmacyRoutes[] = [
     component: Home,
   },
   {
-    name: "New Rx",
+    name: "Rx",
     path: "/new-rx",
     component: NewRx,
   },
@@ -38,8 +38,8 @@ const routes: PharmacyRoutes[] = [
     component: Doctors,
   },
   {
-    name: "Medication Profile",
-    path: "/MedicationProfile",
+    name: "Rx Item",
+    path: "/RxItem",
     component: medsprofile,
   },
 

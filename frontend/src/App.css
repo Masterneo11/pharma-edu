@@ -418,12 +418,13 @@ ul{
 
 }
 .patientlisthomepage {
+margin-top: 120px;
   display: flex;
   flex-direction: column;
   background-color: #D5F0F4;
-  height: 260px;
+  height: 160px;
   border: 1.1px solid rgb(0, 0, 0);
-
+  align-self: flex-end;
 }
 .patient-profile-list {
   display: flex;
@@ -619,3 +620,56 @@ width: 96%;
   width: 120px;
   height: 40px;
 }
+
+.rx-items-list{
+  background-color: #4D79A9;
+  color: white;
+  height: 200px;
+  width: 350px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.rx-item-list-header {
+  display: flex;
+  flex-direction: row;
+  background-color: rgb(240, 240, 240);
+  color: #4D79A9;
+  align-items: center;
+  justify-content: space-around;
+  height: 40px;
+  width: 240px;
+  font-size: 25px;
+  border: 1px solid #4D79A9;
+}
+
+.rx-items-individual {
+  display: flex;
+  flex-direction: column;
+  width: 200px;
+  justify-content: space-evenly;
+  background-color: #4D79A9;
+  color: white;;
+}
+.rx-list-name {
+  display: flex;
+  justify-content: space-around;
+}
+.rx-list-strength {
+  display: flex;
+  justify-content: space-around;
+}
+.rx-list-ndc {
+  display: flex;
+  justify-content: space-evenly;
+}
+
+.scrollable-rx-list {
+  max-height: 300px; /* Set the max height for the scrollable area */
+  overflow-y: auto; /* Enable vertical scrolling */
+  border: 1px solid #ccc; /* Optional: Add a border for visual separation */
+  padding: 10px; /* Optional: Add padding for inner spacing */
+}
+

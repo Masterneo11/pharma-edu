@@ -19,8 +19,6 @@ const RxSearchModal: React.FC<{ isOpen: boolean; onRequestClose: () => void }> =
             className="modal"
             overlayClassName="overlay">
             <div className='pat-entry'>Rx Search entry system:</div>
-            {/* Add your quick search form or content here */}
-            {/* <button onClick={onRequestClose}>Close</button> */}
             <div className='modal-content'>
                 <div className="inner-modal-left">
                     <div className='modal-entry-info-left'>
