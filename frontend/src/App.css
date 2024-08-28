@@ -460,6 +460,81 @@ margin-top: 120px;
 
 }
 
+/* .scrollable-patient-list {
+  max-height: 400px; 
+  overflow-y: auto; 
+  border: 1px solid #ccc; 
+  padding: 10px;
+}
+
+.patientlistsearchbar {
+  display: flex;
+  justify-content: space-between;
+  padding: 8px 0;
+  border-bottom: 1px solid #e0e0e0; 
+}
+
+.patientlistdob, .patientlistname {
+  width: 30%;
+}
+ */
+ .scrollable-patient-list {
+  max-height: 400px;
+  overflow-y: auto;
+  border: 1px solid #ccc;
+  padding: 10px;
+  width: 700px;
+}
+
+.patientlistheader {
+  display: flex;
+  justify-content: space-between;
+  padding: 8px 0;
+  border-bottom: 2px solid #e0e0e0; /* Thicker border for header */
+  font-weight: bold; /* Make the header text bold */
+  background-color: #f7f7f7; /* Optional: background for header */
+}
+
+.patientlistheaderid, .patientlistheadername, .patientlistheaderdob {
+  width: 30%;
+}
+
+.patientlistsearchbar {
+  display: flex;
+  justify-content: space-between;
+  padding: 8px 0;
+  border-bottom: 1px solid #e0e0e0;
+}
+
+.patientlistdob, .patientlistname {
+  width: 30%;
+}
+.patientlist {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  ;
+  
+}
+.patient-dropdown {
+  position: absolute;
+  background-color: white;
+  border: 1px solid #ccc;
+  max-height: 150px;
+  overflow-y: auto;
+  width: 100%;
+  z-index: 1000;
+}
+
+.patient-dropdown-item {
+  padding: 8px;
+  cursor: pointer;
+}
+
+.patient-dropdown-item:hover {
+  background-color: #f0f0f0;
+}
+
 
 
 
@@ -673,3 +748,27 @@ width: 96%;
   padding: 10px; /* Optional: Add padding for inner spacing */
 }
 
+.PatientSearch {
+  position: relative;
+}
+
+.dropdown {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  width: 100%;
+  background-color: white;
+  border: 1px solid #ccc;
+  z-index: 1000;
+  max-height: 150px;
+  overflow-y: auto;
+}
+
+.dropdown-option {
+  padding: 10px;
+  cursor: pointer;
+}
+
+.dropdown-option:hover {
+  background-color: #f0f0f0;
+}
