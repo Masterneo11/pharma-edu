@@ -56,7 +56,7 @@ const PatientModal: React.FC<SearchWord> = ({ Word }) => {
     };
 
     const handleOptionClick = (option: Patient) => {
-        setInputValue(`${option.first_name} ${option.last_name}`);
+        setInputValue(`${option.first_name} ${option.last_name}_id ${option.id}`);
         setIsDropdownVisible(false);
     };
 
@@ -80,7 +80,7 @@ const PatientModal: React.FC<SearchWord> = ({ Word }) => {
                             className='dropdown-option'
                             onClick={() => handleOptionClick(option)}
                         >
-                            {option.first_name} {option.last_name} (DOB: {option.date_of_birth})
+                            {option.id} {option.first_name}  {option.last_name}DOB: {option.date_of_birth}
                         </div>
                     ))}
                 </div>
