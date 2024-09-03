@@ -723,7 +723,7 @@ width: 96%;
 .rx-items-individual {
   display: flex;
   flex-direction: column;
-  width: 200px;
+  width: 300px;
   justify-content: space-evenly;
   background-color: #4D79A9;
   color: white;;
@@ -743,6 +743,7 @@ width: 96%;
 
 .scrollable-rx-list {
   max-height: 300px; /* Set the max height for the scrollable area */
+  width: 300px;
   overflow-y: auto; /* Enable vertical scrolling */
   border: 1px solid #ccc; /* Optional: Add a border for visual separation */
   padding: 10px; /* Optional: Add padding for inner spacing */
@@ -804,3 +805,44 @@ width: 96%;
   padding: 5px;
   border-bottom: 1px solid #ddd;
 }
+
+.state-input-container {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.state-dropdown, .state-input {
+  padding: 8px 12px;
+  font-size: 16px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  width: 150px;
+  transition: border-color 0.3s ease;
+}
+
+.state-dropdown:focus, .state-input:focus {
+  border-color: #007BFF;
+  outline: none;
+}
+
+.toggle-input-button {
+  padding: 8px 12px;
+  font-size: 14px;
+  background-color: #007BFF;
+  color: #fff;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.toggle-input-button:hover {
+  background-color: #0056b3;
+}
+
+.toggle-input-button:focus {
+  outline: none;
+}
+
+

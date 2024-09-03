@@ -1,4 +1,6 @@
-// import React, { useState, useEffect, ReactElement } from "react";
+
+
+// import React, { useState, useEffect } from "react";
 // import NameField from '../components/NameField';
 // import QuickSearch from '../components/QuickSearch';
 // import Save from '../SaveInfo';
@@ -14,34 +16,12 @@
 //   const [medicationSearch, setMedicationSearch] = useState<string>("");
 //   const [patients, setPatients] = useState<any[]>([]);
 //   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
-
-//   const openModal = () => setIsModalOpen(true);
-//   const closeModal = () => setIsModalOpen(false);
-
 //   const [patientName, setPatientName] = useState<string>("");
 //   const [filteredPatients, setFilteredPatients] = useState<any[]>([]);
 //   const [showDropdown, setShowDropdown] = useState<boolean>(false);
-//   const handlePatientSearchChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-//     const value = e.target.value;
-//     setPatientName(value);
 
-//     if (value.trim() === "") {
-//       setFilteredPatients([]);
-//       setShowDropdown(false);
-//     } else {
-//       const filtered = patients.filter(patient =>
-//         `${patient.first_name} ${patient.last_name}`.toLowerCase().includes(value.toLowerCase())
-//       );
-//       setFilteredPatients(filtered);
-//       setShowDropdown(true);
-//     }
-//   };
-//   const handlePatientSelect = (patient: any) => {
-//     setPatientName(`${patient.first_name} ${patient.last_name}`);
-//     setShowDropdown(false);
-//   };
-
-
+//   const openModal = () => setIsModalOpen(true);
+//   const closeModal = () => setIsModalOpen(false);
 
 //   const fetchPatients = async () => {
 //     const response = await fetch("http://localhost:8000/patients", {
@@ -63,23 +43,35 @@
 //     fetchPatients();
 //   }, []);
 
+//   const handlePatientSearchChange = (value: string) => {
+//     setPatientName(value);
+
+//     if (value.trim() === "") {
+//       setFilteredPatients([]);
+//       setShowDropdown(false);
+//     } else {
+//       const filtered = patients.filter(patient =>
+//         `${patient.first_name} ${patient.last_name}`.toLowerCase().includes(value.toLowerCase())
+//       );
+//       setFilteredPatients(filtered);
+//       setShowDropdown(true);
+//     }
+//   };
+
+//   const handlePatientSelect = (patient: any) => {
+//     setPatientName(`${patient.first_name} ${patient.last_name}`);
+//     setShowDropdown(false);
+//   };
+
 //   return (
 //     <>
 //       <div>
 //         <div className='homeformat'>
 //           <div className='EnterNewRxInfo'>
-//             {/* <div className='Patient-Search'>
-//               <QuickSearch Word='Patient Name' />
-//               <button className='modal-search-button' onClick={openModal}>🔍</button>
-//               <PatientModal isOpen={isModalOpen} onRequestClose={closeModal} />
-//             </div> */}
-
-
-
 //             <div className="Patient-Search">
 //               <QuickSearch
 //                 Word='Patient Name'
-//                 value={ }
+//                 value={patientName}
 //                 onChange={handlePatientSearchChange}
 //               />
 //               {showDropdown && (
@@ -99,21 +91,6 @@
 //               <PatientModal isOpen={isModalOpen} onRequestClose={closeModal} />
 //             </div>
 
-
-
-
-
-
-
-
-
-
-
-//             {/* <div className="Patient-Search">
-//               <QuickSearch Word='Patient D O B' />
-//               <button className="modal-search-button" onClick={openModal}>🔍</button>
-//               <PatientModal isOpen={isModalOpen} onRequestClose={closeModal} />
-//             </div> */}
 //             <div className='fields'>
 //               <NameField Name='Rx Quantity' value={rxQuantity} onChange={(e) => setRxQuantity(e.target.value)} className="Rad" />
 //               <NameField Name='Rx Refills' value={rxRefills} onChange={(e) => setRxRefills(e.target.value)} className="Rad" />
@@ -121,19 +98,21 @@
 //               <NameField Name='Doctor Name' value={doctorName} onChange={(e) => setDoctorName(e.target.value)} className="Rad" />
 //               <NameField Name='Medication Search' value={medicationSearch} onChange={(e) => setMedicationSearch(e.target.value)} className="Rad" />
 //             </div>
+
 //             <div>
 //               <Directions Instruct="Directions" />
 //             </div>
+
 //             <div className='bottomfields'>
 //               <Save Save='Save' />
 //               <textarea placeholder="Tech initials" className="TechIns"></textarea>
 //               <Save Save='enter' />
 //             </div>
 //           </div>
+
 //           <div className="rxrightside">
 //             <div className='scanImage'> Scan Image here.......... </div>
 //             <div className="patientlist">
-//               {/* Header Row for Patient List */}
 //               <div className="patientlistheader">
 //                 <div className="patientlistheaderid">Id</div>
 //                 <div className="patientlistheadername">Patient Name</div>
@@ -141,14 +120,6 @@
 //               </div>
 //               <div className="patientlisthomepage">
 //                 <div className="scrollable-patient-list">
-//                   {/* Header Row for Patient List */}
-//                   {/* <div className="patientlistheader">
-//                     <div className="patientlistheaderid">Id</div>
-//                     <div className="patientlistheadername">Patient Name</div>
-//                     <div className="patientlistheaderdob">DOB</div>
-//                   </div> */}
-
-//                   {/* Dynamic Patient List */}
 //                   {patients.map(patient => (
 //                     <div className="patientlistsearchbar" key={patient.id}>
 //                       <div className="patientlistdob">{patient.id}</div>
@@ -167,6 +138,10 @@
 // };
 
 // export default NewRx;
+
+
+
+
 
 import React, { useState, useEffect } from "react";
 import NameField from '../components/NameField';
@@ -187,6 +162,7 @@ const NewRx: React.FC = () => {
   const [patientName, setPatientName] = useState<string>("");
   const [filteredPatients, setFilteredPatients] = useState<any[]>([]);
   const [showDropdown, setShowDropdown] = useState<boolean>(false);
+  const [techInitials, setTechInitials] = useState<string>("");
 
   const openModal = () => setIsModalOpen(true);
   const closeModal = () => setIsModalOpen(false);
@@ -231,6 +207,37 @@ const NewRx: React.FC = () => {
     setShowDropdown(false);
   };
 
+  const handleSave = async () => {
+    const newRxData = {
+      patientName,
+      rxQuantity,
+      rxRefills,
+      dateOfRx,
+      doctorName,
+      medicationSearch,
+      techInitials,
+    };
+
+    try {
+      const response = await fetch("http://localhost:8000/prescriptions", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(newRxData),
+      });
+
+      if (response.ok) {
+        console.error("saved prescriptions succesfully ")
+      } else {
+        console.error("Failed to save prescription.");
+      }
+    } catch (error) {
+      console.error("An error occurred:", error);
+      alert("An error occurred while saving the prescription.");
+    }
+  };
+
   return (
     <>
       <div>
@@ -272,9 +279,14 @@ const NewRx: React.FC = () => {
             </div>
 
             <div className='bottomfields'>
-              <Save Save='Save' />
-              <textarea placeholder="Tech initials" className="TechIns"></textarea>
-              <Save Save='enter' />
+              <Save Save='Save' onClick={handleSave} />
+              <textarea
+                placeholder="Tech initials"
+                className="TechIns"
+                value={techInitials}
+                onChange={(e) => setTechInitials(e.target.value)}
+              />
+              <Save Save='Enter' />
             </div>
           </div>
 
@@ -306,9 +318,4 @@ const NewRx: React.FC = () => {
 };
 
 export default NewRx;
-
-
-
-
-
 

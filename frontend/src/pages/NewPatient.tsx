@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import NameField from '../components/NameField';
 import Save from '../SaveInfo'
+import StateDropdown from '../components/StatedDropdown';
 import '../PatientPage.css';
 
 const NewPatient: React.FC = () => {
@@ -71,7 +72,8 @@ const NewPatient: React.FC = () => {
         <NameField Name='Allergies' value={allergies} onChange={handleStringChange(setAllergies)} className="Rad" />
         <NameField Name='Street' value={street} onChange={handleStringChange(setStreet)} className="Rad" />
         <NameField Name='City' value={city} onChange={handleStringChange(setCity)} className="Rad" />
-        <NameField Name='State' value={state} onChange={handleStringChange(setState)} className="Rad" />
+        <StateDropdown selectedState={state} onChange={(e) => setState(e.target.value)} />
+        {/* <NameField Name='State' value={state} onChange={handleStringChange(setState)} className="Rad" /> */}
         <NameField Name='Zipcode' value={zipcode} onChange={handleStringChange(setZipCode)} className="Rad" />
     </div>
         <div className='bottomfields'> <Save Save='Save' onClick={handleClick} />  <Save Save='enter' /></div>
