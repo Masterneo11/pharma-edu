@@ -22,11 +22,11 @@ const routes: PharmacyRoutes[] = [
     path: "/new-rx",
     component: NewRx,
   },
-  {
-    name: "Patients",
-    path: "/PatientProfile",
-    component: Patient,
-  },
+  // {
+  //   name: "Patients",
+  //   path: "/PatientProfile",
+  //   component: Patient,
+  // },
   {
     name: "New Patient",
     path: "/New Patient",

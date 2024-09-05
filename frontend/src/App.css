@@ -1,4 +1,4 @@
-#root {
+/* #root {
     max-width: 1400px;
     height: 1400px;
     width: 1600px;
@@ -161,8 +161,6 @@ body {
   align-items: center;
   justify-content: center;
   background-color: #2E3F59;
-  /* background-color: 
-  width: 12%; */
   font-size: 1.7rem;
 }
 .HomePage {
@@ -177,10 +175,6 @@ body {
   
 }
   
-/* img {
-    height: 500px;
-    align-self: flex-end;
-} */
 img {
     height: 100px;
     align-self: flex-end;
@@ -197,26 +191,6 @@ img:nth-child(2) {
   
   
   
-/* component fields styling below */
-  
-  
-  
-  
-  
-  
-  
-
-
-
-
-
-
-
-
-
-
-
-/*       New Rx Divs Area      */
 
 
 .directionsfield {
@@ -444,10 +418,6 @@ margin-top: 120px;
 
 
 
-
-
-/* Patient Page divs area  */
-
 .patient-profile-right-side {
   display: flex;
   flex-direction: column;
@@ -460,24 +430,6 @@ margin-top: 120px;
 
 }
 
-/* .scrollable-patient-list {
-  max-height: 400px; 
-  overflow-y: auto; 
-  border: 1px solid #ccc; 
-  padding: 10px;
-}
-
-.patientlistsearchbar {
-  display: flex;
-  justify-content: space-between;
-  padding: 8px 0;
-  border-bottom: 1px solid #e0e0e0; 
-}
-
-.patientlistdob, .patientlistname {
-  width: 30%;
-}
- */
  .scrollable-patient-list {
   max-height: 400px;
   overflow-y: auto;
@@ -490,9 +442,9 @@ margin-top: 120px;
   display: flex;
   justify-content: space-between;
   padding: 8px 0;
-  border-bottom: 2px solid #e0e0e0; /* Thicker border for header */
-  font-weight: bold; /* Make the header text bold */
-  background-color: #f7f7f7; /* Optional: background for header */
+  border-bottom: 2px solid #e0e0e0; 
+  font-weight: bold; 
+  background-color: #f7f7f7; 
 }
 
 .patientlistheaderid, .patientlistheadername, .patientlistheaderdob {
@@ -543,10 +495,6 @@ margin-top: 120px;
 
 
 
-
-
-
-/*     REACT MODAL STYLING  */
 
 .modal {
   position: absolute;
@@ -616,21 +564,8 @@ width: 96%;
   outline: none;
   transition: all 0.3s ease;
   box-shadow: 0 4px 6px rgba(255, 255, 255, 0.1);
-
-  /* border-radius: 50px;
-  font-size: 16px;
-  transition: all 0.3s ease;
-  box-shadow: 0 4px 6px rgba(255, 255, 255, 0.1);
-  background-color: white;
-  width: 150px */
-
 }
 
-/* .Modal-button {
-  background-color: #4D79A9;
-  height: 80px;
-  width: 80px;
-} */
 .Modal-save-button {
   background-color: #4D79A9;
   color: white;
@@ -657,14 +592,6 @@ width: 96%;
   padding-left:50px;
 }
 .modal-search-button {
-  /* height: 25px;
-  font-size: 16px;
-  padding: 0.6em;
-  font-weight: 500;
-  font-family: inherit;
-  background-color: #1a1a1a;
-  cursor: pointer;
-  transition: border-color 0.25s; */
   display: flex;
   justify-content: center;
   align-items: center;
@@ -742,11 +669,11 @@ width: 96%;
 }
 
 .scrollable-rx-list {
-  max-height: 300px; /* Set the max height for the scrollable area */
+  max-height: 300px; 
   width: 300px;
-  overflow-y: auto; /* Enable vertical scrolling */
-  border: 1px solid #ccc; /* Optional: Add a border for visual separation */
-  padding: 10px; /* Optional: Add padding for inner spacing */
+  overflow-y: auto; 
+  border: 1px solid #ccc; 
+  padding: 10px;
 }
 
 .PatientSearch {
@@ -845,4 +772,4 @@ width: 96%;
   outline: none;
 }
 
-
+ */

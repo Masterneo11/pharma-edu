@@ -11,7 +11,7 @@ const Nav: React.FC<interfaceFillerWord> = ({ Fillerword }) => {
   return (
     <nav>
       <div className="MainNav">
-        <div className='fillerword'> {Fillerword}</div>
+        <div className={Fillerword}></div>
 
         <ul>
           {routes.map((route, index) => (

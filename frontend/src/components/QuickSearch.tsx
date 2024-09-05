@@ -61,17 +61,18 @@ const PatientModal: React.FC<SearchWord> = ({ Word }) => {
     };
 
     return (
-        <div className='PatientSearch'>
-            <label id="PatSar" htmlFor='input'>{Word}</label>
-            <input
-                type='text'
-                id='input'
-                className='quickinput'
-                value={inputValue}
-                onChange={handleInputChange}
-            />
-            <button className='enter'>Search</button>
-
+        <div>
+            <div className='PatientSearch'>
+                <label id="PatSar" htmlFor='input'>{Word}</label>
+                <input
+                    type='text'
+                    id='input'
+                    className='quickinput'
+                    value={inputValue}
+                    onChange={handleInputChange}
+                />
+                <button className='enter'>Search</button>
+            </div>
             {isDropdownVisible && (
                 <div className='dropdown'>
                     {filteredOptions.map((option) => (
@@ -84,8 +85,7 @@ const PatientModal: React.FC<SearchWord> = ({ Word }) => {
                         </div>
                     ))}
                 </div>
-            )}
-        </div>
+            )}</div>
     );
 };
 
