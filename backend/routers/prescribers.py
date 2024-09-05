@@ -11,12 +11,12 @@ router = APIRouter()
 # TODO: Update return status codes
 
 
-@router.get("/prescribers", tags=["Prescribers"])
+@router.get("/prescribers")
 async def get_prescribers(session: Session = Depends(get_db)):
     return session.exec(select(Prescriber)).all()
 
 
-@router.get("/prescribers/{prescriber_id}", tags=["Prescribers"])
+@router.get("/prescribers/{prescriber_id}")
 async def get_prescriber(prescriber_id: int, session: Session = Depends(get_db)) -> Prescriber:
     prescriber: Prescriber | None = session.get(Prescriber, prescriber_id)
     if prescriber is None:
@@ -25,7 +25,7 @@ async def get_prescriber(prescriber_id: int, session: Session = Depends(get_db))
     return prescriber
 
 
-@router.post("/prescribers", tags=["Prescribers"])
+@router.post("/prescribers")
 async def create_prescriber(prescriber_create_request: PrescriberCreateRequest, session: Session = Depends(get_db)) -> PrescriberCreateResponse:
     prescriber: Prescriber = Prescriber.from_orm(prescriber_create_request)
     session.add(prescriber)
@@ -34,7 +34,7 @@ async def create_prescriber(prescriber_create_request: PrescriberCreateRequest, 
     return PrescriberCreateResponse(prescriber_id=prescriber.id)
 
 
-@router.patch("/prescribers/{prescriber_id}", tags=["Prescribers"])
+@router.patch("/prescribers/{prescriber_id}")
 async def update_prescriber(prescriber_id: int, prescriber_update: PrescriberUpdateRequest, session: Session = Depends(get_db)):
     """ Update specific fields of a prescriber, but the prescriber needs to exist. All fields are optional. """
     prescriber: Prescriber | None = session.get(Prescriber, prescriber_id)
@@ -50,7 +50,7 @@ async def update_prescriber(prescriber_id: int, prescriber_update: PrescriberUpd
     # TODO: Return a 204 or whatever
 
 
-@router.delete("/prescribers/{prescriber_id}", tags=["Prescribers"])
+@router.delete("/prescribers/{prescriber_id}")
 async def delete_prescriber(prescriber_id: int, session: Session = Depends(get_db)):
     prescriber: Prescriber | None = session.get(Prescriber, prescriber_id)
     if prescriber is None:

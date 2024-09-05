@@ -15,7 +15,7 @@ from schemas import (
 router = APIRouter()
 
 
-@router.get("/prescriptions", tags=["Prescriptions"])
+@router.get("/prescriptions")
 async def get_prescriptions(session: Session = Depends(get_db)) -> list[PrescriptionBasicInfo]:
     prescriptions: list[Prescription] = session.exec(select(Prescription)).all()
     return map(lambda prescription: PrescriptionBasicInfo(
@@ -26,7 +26,7 @@ async def get_prescriptions(session: Session = Depends(get_db)) -> list[Prescrip
                                     prescriptions)
 
 
-@router.get("/prescriptions/{prescription_id}", tags=["Prescriptions"])
+@router.get("/prescriptions/{prescription_id}")
 async def get_prescription(prescription_id: int, session: Session = Depends(get_db)) -> Prescription:
     prescription: Prescription | None = session.get(Prescription, prescription_id)
     if prescription is None:
@@ -35,7 +35,7 @@ async def get_prescription(prescription_id: int, session: Session = Depends(get_
     return prescription
 
 
-@router.post("/prescriptions", tags=["Prescriptions"])
+@router.post("/prescriptions")
 async def create_prescription(prescription_create_request: PrescriptionCreateRequest, session: Session = Depends(get_db)) -> PrescriptionCreateResponse:
     prescription: Prescription = Prescription.from_orm(prescription_create_request)
     session.add(prescription)
@@ -44,7 +44,7 @@ async def create_prescription(prescription_create_request: PrescriptionCreateReq
     return PrescriptionCreateResponse(rx_number=prescription.rx_number)
 
 
-@router.patch("/prescriptions/{prescription_id}", tags=["Prescriptions"])
+@router.patch("/prescriptions/{prescription_id}")
 async def update_prescription(prescription_id: int, prescription_update: PrescriptionUpdateRequest, session: Session = Depends(get_db)):
     """ Update specific fields of a prescription, but the prescription needs to exist. All fields are optional. """
     prescription: Prescription | None = session.get(Prescription, prescription_id)
@@ -60,7 +60,7 @@ async def update_prescription(prescription_id: int, prescription_update: Prescri
     # TODO: Return a 204 or whatever
 
 
-@router.delete("/prescriptions/{prescription_id}", tags=["Prescriptions"])
+@router.delete("/prescriptions/{prescription_id}")
 async def delete_prescription(prescription_id: int, session: Session = Depends(get_db)):
     prescription: Prescription | None = session.get(Prescription, prescription_id)
     if prescription is None:
