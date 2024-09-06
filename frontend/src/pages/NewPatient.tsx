@@ -40,7 +40,7 @@ const NewPatient: React.FC = () => {
     const [zipcode, setZipCode] = useState<string>("");
     const [insuranceName, setInsuranceName] = useState<string>("");
     const [idNumber, setIdNumber] = useState<string>("");
-    const [groupNumber, setGroupNumber] = useState<string>("");
+    const [insuranceGroupNumber, setInsuranceGroupNumber] = useState<string>("");
     const [bin, setBin] = useState<string>("");
     const [pcn, setPCN] = useState<string>("");
     const [personCode, setPersonCode] = useState<string>("");
@@ -74,11 +74,10 @@ const NewPatient: React.FC = () => {
             allergies,
             insurance_name: insuranceName,
             insurance_member_id: idNumber,
-            group_number: groupNumber,
+            insurance_group_number: insuranceGroupNumber,
             insurance_rx_bin: bin,
             insurance_rx_pcn: pcn,
             insurance_person_code: personCode,
-            prescriptions: prescriptions.join("")
         };
 
         try {
@@ -120,11 +119,10 @@ const NewPatient: React.FC = () => {
         setAllergies(data.allergies || "");
         setInsuranceName(data.insurance_name || "");
         setIdNumber(data.insurance_member_id || "");
-        setGroupNumber(data.group_number || "");
+        setInsuranceGroupNumber(data.group_number || "");
         setBin(data.insurance_rx_bin || "");
         setPCN(data.insurance_rx_pcn || "");
         setPersonCode(data.insurance_person_code || "");
-        setPrescriptions(data.prescriptions || []);
 
 
         //     // Using reduce() to concatenate prescriptions into a single string
@@ -163,7 +161,7 @@ const NewPatient: React.FC = () => {
         setAllergies("");
         setInsuranceName("");
         setIdNumber("");
-        setGroupNumber("");
+        setInsuranceGroupNumber("");
         setBin("");
         setPCN("");
         setPersonCode("");
@@ -193,7 +191,7 @@ const NewPatient: React.FC = () => {
                 <div className='patient-profile-fields'>
                     <NameField Name='Insurance Member ID' value={idNumber} onChange={(e) => setIdNumber(e.target.value)} className="Rad" />
                     <NameField Name='Insurance Name' value={insuranceName} onChange={(e) => setInsuranceName(e.target.value)} className="Rad" />
-                    <NameField Name='Insurance Group #' value={groupNumber} onChange={(e) => setGroupNumber(e.target.value)} className="Rad" />
+                    <NameField Name='Insurance Group #' value={insuranceGroupNumber} onChange={(e) => setInsuranceGroupNumber(e.target.value)} className="Rad" />
                     <NameField Name='BIN' value={bin} onChange={(e) => setBin(e.target.value)} className="Rad" />
                     <NameField Name='PCN' value={pcn} onChange={(e) => setPCN(e.target.value)} className="Rad" />
                     <NameField Name='Person Code' value={personCode} onChange={(e) => setPersonCode(e.target.value)} className="Rad" />

@@ -28,12 +28,12 @@ const routes: PharmacyRoutes[] = [
   //   component: Patient,
   // },
   {
-    name: "New Patient",
+    name: "Patient",
     path: "/New Patient",
     component: newPatient,
   },
   {
-    name: "Doctors",
+    name: "Doctor",
     path: "/doctors",
     component: Doctors,
   },
