@@ -1,0 +1,23 @@
+/* NameField.css */
+.NameField {
+    /* Custom styles for your component */
+    max-width: 100% !important /* Ensures the input takes the full width available */;
+    background-color: #4D79A9;
+    border-radius: 0px!important;
+}
+
+.form-control {
+    /* Override Bootstrap's form control styles if needed */
+    border-radius: 0.25rem !important; /* Example: adjusting border-radius */
+    background-color: #4D79A9;
+
+}
+
+.name-field-container .name-field .form-control {
+    max-width: 100%;
+    border-radius: 0.25rem;
+    /* background-color: aquamarine; */
+    background-color: #4D79A9;
+
+}
+

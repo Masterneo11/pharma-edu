@@ -1,0 +1,10 @@
+.custom-border {
+    border: 2px solid #007bff; /* Bootstrap primary blue color */
+    border-radius: 0.25rem; /* Matches Bootstrap's border-radius */
+}
+
+/* Optional: Change border color on focus */
+.custom-border:focus {
+    border-color: #0056b3; /* Darker shade of blue for focus */
+    box-shadow: 0 0 0 0.2rem rgba(38, 143, 255, 0.25); /* Bootstrap's focus shadow */
+}

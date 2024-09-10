@@ -1,10 +1,9 @@
-
-
 import React, { useState, useEffect } from "react";
 import NameField from '../components/NameField';
 import DoctorModal from '../modals/DoctorModal';
 import Save from '../SaveInfo';
-import StateDropdown from '../components/StatedDropdown';
+import StateDropdown from "../components/StatedDropdown";
+import DrType from '../components/DrTypeDropdown';
 import '../PatientPage.css';
 
 interface Doctor {
@@ -31,6 +30,7 @@ const Doctors: React.FC = () => {
   const [street, setStreet] = useState<string>("");
   const [city, setCity] = useState<string>("");
   const [state, setState] = useState<string>("");
+  const [dr, setdr] = useState<string>("");
   const [zipcode, setZipCode] = useState<string>("");
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
   const [doctors, setDoctors] = useState<Doctor[]>([]);
@@ -48,6 +48,7 @@ const Doctors: React.FC = () => {
       prescriber_type: drType,
       street: street,
       city: city,
+      dr: dr,
       state: state,
       zipcode: zipcode,
       contact_number: phoneNumber,
@@ -121,7 +122,7 @@ const Doctors: React.FC = () => {
     setNpiNumber(doctor.npi);
     setStreet(doctor.street);
     setCity(doctor.city);
-    setState(doctor.state);
+    setdr(doctor.state);
     setZipCode(doctor.zipcode);
     window.scrollTo(0, 0); // Scroll to the top for editing
   };
@@ -135,7 +136,7 @@ const Doctors: React.FC = () => {
     setNpiNumber('');
     setStreet('');
     setCity('');
-    setState('');
+    setdr('');
     setZipCode('');
   };
 
@@ -149,7 +150,7 @@ const Doctors: React.FC = () => {
         <div className='patient-profile-fields'>
           <NameField Name='First name' value={firstName} onChange={(e) => setFirstName(e.target.value)} className="Rad" />
           <NameField Name='Dr Name' value={lastName} onChange={(e) => setLastName(e.target.value)} className="Rad" />
-          <NameField Name='Prescriber type' value={drType} onChange={(e) => setDrType(e.target.value)} className="Rad" />
+          <DrType selectedDrType={dr} onChange={(e) => setdr(e.target.value)} />
           <NameField Name='Dea' value={dea} onChange={(e) => setDea(e.target.value)} className="Rad" />
           <NameField Name='Npi' value={npi} onChange={(e) => setNpiNumber(e.target.value)} className="Rad" />
           <NameField Name='Phone #' value={phoneNumber} onChange={(e) => setPhoneNumber(e.target.value)} className="Rad" />
@@ -168,22 +169,44 @@ const Doctors: React.FC = () => {
         </div>
       </div>
       <div className="patient-profile-right-side">
-        <div className="doctor-list-container">
-          <h3>Doctors List</h3>
-          <div className="scrollable-rx-list">
-            {doctors.map(doctor => (
-              <dl className="rx-items-individual" key={doctor.id}>
-                <dt>Name: {doctor.first_name} {doctor.last_name}</dt>
-                <dt>Type: {doctor.prescriber_type}</dt>
-                <dt>DEA: {doctor.dea}</dt>
-                <dt>NPI: {doctor.npi}</dt>
-                <dt>Phone: {doctor.contact_number}</dt>
-                <div className="innderbuttons">
-                  <button onClick={() => handleEdit(doctor)}>Edit</button>
-                  <button className="deletebutton" onClick={() => handleDelete(doctor.id)}>Delete</button>
+        {/* <div className="doctor-list-container">
+          <div className="outerscroll-rx"> */}
+        <div className="container mt-4">
+          <div className="card shadow-sm">
+            <div className="card-header bg-primary text-white">
+              <h5 className="mb-0">Doctor List</h5>
+            </div>
+
+
+            <div className="scrollable-rx-list bg-light border rounded p-3" style={{ maxHeight: '400px', overflowY: 'auto' }}>
+              {doctors.map(doctor => (
+                <div className="mb-3 p-3 bg-white border rounded shadow-sm" key={doctor.id}>
+                  <dl className="row">
+                    <dt className="col-sm-3">Name:</dt>
+
+                    <dd className="col-sm-9">{doctor.first_name} {doctor.last_name}</dd>
+                    <dt className="col-sm-3">Type:</dt>
+                    <dd className="col-sm-9">{doctor.prescriber_type}</dd>
+                    <dt className="col-sm-3">DEA:</dt>
+                    <dd className="col-sm-9">{doctor.dea}</dd>
+                    <dt className="col-sm-3">NPI:</dt>
+                    <dd className="col-sm-9">{doctor.npi}</dd>
+                    <dt className="col-sm-3">Phone:</dt>
+                    <dd className="col-sm-9">{doctor.contact_number}</dd>
+                    <dt className="col-sm-3">id:</dt>
+                    <dd className="col-sm-9">{doctor.id}</dd>
+                  </dl>
+                  <div className="d-flex justify-content-end">
+                    <button onClick={() => handleEdit(doctor)} className="btn btn-primary me-2">
+                      Edit
+                    </button>
+                    <button onClick={() => handleDelete(doctor.id)} className="btn btn-danger">
+                      Delete
+                    </button>
+                  </div>
                 </div>
-              </dl>
-            ))}
+              ))}
+            </div>
           </div>
         </div>
       </div>
@@ -192,3 +215,4 @@ const Doctors: React.FC = () => {
 };
 
 export default Doctors;
+

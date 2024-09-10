@@ -4,6 +4,7 @@ import Patient from "./pages/PatientProfile";
 import Doctors from "./pages/Doctors";
 import medsprofile from "./pages/RxItem";
 import newPatient from "./pages/NewPatient";
+import prescriptions from "./pages/Prescriptions";
 
 interface PharmacyRoutes {
   name: string;
@@ -42,6 +43,11 @@ const routes: PharmacyRoutes[] = [
     path: "/RxItem",
     component: medsprofile,
   },
+  {
+    name: "prescriptions",
+    path: "/prescriptions",
+    component: prescriptions,
+  }
 
 ];
 

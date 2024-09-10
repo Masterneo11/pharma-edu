@@ -15,12 +15,18 @@ const StateDropdown: React.FC<StateDropdownProps> = ({ selectedState, onChange }
     ];
 
     return (
-        <select value={selectedState} onChange={onChange} className="state-dropdown">
+        <select
+            aria-label="Select State"
+            value={selectedState}
+            onChange={onChange}
+            className="state-dropdown"
+        >
             <option value="" disabled>Select State</option>
             {states.map(state => (
                 <option key={state} value={state}>{state}</option>
             ))}
         </select>
+
     );
 };
 

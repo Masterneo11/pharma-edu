@@ -869,14 +869,26 @@ display: flex;
 justify-content: center;
 align-items: center;
 background-color: #ffffff;
+
+}
+
+.homeformatForNewRx {
+
+width: 80vw;
+height: 80vh;
+margin-top: 0px;
+display: flex;
+flex-direction: column;
+justify-content: center;
+align-items: center;
+background-color: #ffffff;
 border: 1px solid black;
 margin-left: 100px;
-
 }
 
 .MainNav {
 
-width: 100vw;
+width: 105vw;
 height: 140px;
 background-color: #2E3F59;
 color: white;
@@ -1080,9 +1092,20 @@ flex-direction: column;
 background-color: #ffffff;
 align-items: center;
 justify-content: space-around;
-border: 1px solid black;
 border-top: 1px solid white;
 }
+.EnterNewRxInfoNEW {
+  display: flex;
+  margin-top: 20px;
+  height: 600px;
+  width: 1000px;
+  flex-direction: column;
+  background-color: #ffffff;
+  align-items: center;
+  justify-content: space-around;
+  border: 1px solid black;
+  border-top: 1px solid white;
+  }
 .PatientSearch {
 display: flex;
 flex-direction: row;
@@ -1156,6 +1179,17 @@ width: 350px;
 padding-bottom: 10px;
 font-size: 22px;
 }
+
+.patient-profile-fields-rr{
+  padding-top: -100px;
+  display: flex;
+  flex-direction: column;
+  margin-top: -60px;
+  height: 250px;
+  width: 350px;
+  padding-bottom: 10px;
+  font-size: 22px;
+  }
 .scanImage {
 
 margin-top: 120px;
@@ -1230,7 +1264,6 @@ border: 1.1px solid rgb(0, 0, 0);
 
 }
 .homepagerightside {
-border: 1.1px solid rgb(0, 0, 0);
 height: 500px;
 width: 720px;
 background-color: #ffffff;
@@ -1247,11 +1280,11 @@ background-color: #ffffff;
 display: flex;
 flex-direction: column;
 align-items: center;
-padding-top: 80px;
 height: 420px;
-width: 720px;
-border: 1.1px solid rgb(0, 0, 0);
+width: 500px;
 background-color: white;
+/* border: 1.1px solid rgb(0, 0, 0); */
+
 
 }
 
@@ -1383,7 +1416,7 @@ background-color: rgb(243, 243, 243);
 
 height: 100%;
 width: 50%; 
-border: 1px solid #4D79A9
+border: 1px solid #4D79A9 !important ;
 
 
 }
@@ -1408,7 +1441,7 @@ width: 96%;
 background-color: #ffffff;
 margin-left: 20px;
 border-radius: 50px;
-border: 1px solid #4D79A9;
+border: 1px solid #4D79A9 !important;
 
 font-size: 16px;
 outline: none;
@@ -1480,7 +1513,7 @@ transition: border-color 0.25s !important;
 }
 .close {
 margin-top: 38px;
-border: 2px solid  #4D79A9;
+border: 2px solid  #4D79A9 !important;
 color: white;
 background-color:  #4D79A9;
 margin-left:2px
@@ -1515,7 +1548,7 @@ justify-content: space-around;
 height: 40px;
 width: 240px;
 font-size: 25px;
-border: 1px solid #4D79A9;
+border: 1px solid #4D79A9 !important;
 }
 
 .rx-items-individual {
@@ -1542,7 +1575,7 @@ justify-content: space-evenly;
 .scrollable-rx-list {
 max-height: 300px;
 overflow-y: auto; 
-border: 1px solid #ccc; 
+border: 1px solid #ccc!important; 
 padding: 10px; 
 width: 400px;
 }
@@ -1557,7 +1590,7 @@ width: 400px;
 .deletebutton {
   background-color: rgba(216, 175, 175, 0.704);
   color: white;
-  border: white;
+  border: white! important;
 }
 .innerbuttons {
   width: 100%;
@@ -1567,5 +1600,6 @@ a {
   display: flex;
   margin-top: 30px;
   font-size: 2rem;
+  color: white !important;
+  text-decoration: none !important;
 }
-

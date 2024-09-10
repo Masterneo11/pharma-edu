@@ -27,6 +27,7 @@ interface Patient {
 const NewPatient: React.FC = () => {
     const [patients, setPatients] = useState<Patient[]>([]);
     const [editingPatientId, setEditingPatientId] = useState<number | null>(null);
+    const [selectedPrescriptions, setSelectedPrescriptions] = useState<string[]>([]);
 
     // State for form fields
     const [lastName, setLastName] = useState<string>("");
@@ -82,14 +83,12 @@ const NewPatient: React.FC = () => {
 
         try {
             if (editingPatientId) {
-                // Update existing patient
                 await fetch(`http://localhost:8000/patients/${editingPatientId}`, {
-                    method: "PATCH", // or PATCH based on API
+                    method: "PATCH",
                     headers: { "Content-Type": "application/json" },
                     body: JSON.stringify(patientData),
                 });
             } else {
-                // Create new patient
                 await fetch("http://localhost:8000/patients", {
                     method: "POST",
                     headers: { "Content-Type": "application/json" },
@@ -103,6 +102,7 @@ const NewPatient: React.FC = () => {
             console.error("Error saving patient", error);
         }
     };
+
     const handleEdit = async (patient: Patient) => {
         const response = await fetch(`http://localhost:8000/patients/${patient.id}`);
         const data = await response.json();
@@ -123,19 +123,7 @@ const NewPatient: React.FC = () => {
         setBin(data.insurance_rx_bin || "");
         setPCN(data.insurance_rx_pcn || "");
         setPersonCode(data.insurance_person_code || "");
-
-
-        //     // Using reduce() to concatenate prescriptions into a single string
-        //     const prescriptionsString = data.prescriptions.reduce((acc: string, prescription: string, index: number) => {
-        //         return index === 0 ? prescription : `${acc}, ${prescription}`;
-        //     }, "");
-
-        //     setPrescriptions(prescriptionsString);
     };
-
-
-
-
 
     const handleDelete = async (id: number) => {
         try {
@@ -145,6 +133,16 @@ const NewPatient: React.FC = () => {
             fetchPatients();
         } catch (error) {
             console.error("Error deleting patient", error);
+        }
+    };
+
+    const handleFetchPrescriptions = async (id: number) => {
+        try {
+            const response = await fetch(`http://localhost:8000/prescriptions/${id}`);
+            const data = await response.json();
+            setSelectedPrescriptions(data);
+        } catch (error) {
+            console.error("Failed to fetch prescriptions", error);
         }
     };
 
@@ -171,7 +169,7 @@ const NewPatient: React.FC = () => {
     return (
         <div className='homeformat'>
             <div className='EnterNewRxInfo'>
-                <div className='patient-profile-fields'>
+                <div className='patient-profile-fields-rr'>
                     <NameField Name='Last name' value={lastName} onChange={(e) => setLastName(e.target.value)} className="Rad" />
                     <NameField Name='First name' value={firstName} onChange={(e) => setFirstName(e.target.value)} className="Rad" />
                     <NameField Name='Date of birth' value={dob} onChange={(e) => setDob(e.target.value)} className="Rad" />
@@ -182,11 +180,10 @@ const NewPatient: React.FC = () => {
                     <StateDropdown selectedState={state} onChange={(e) => setState(e.target.value)} />
                     <NameField Name='Zipcode' value={zipcode} onChange={(e) => setZipCode(e.target.value)} className="Rad" />
                 </div>
-                <div className='bottomfields'>
+                <div className='bottomfields-rr'>
                     <Save Save={editingPatientId ? 'Update' : 'Save'} onClick={handleSave} />
                 </div>
             </div>
-
             <div className="patient-profile-right-side">
                 <div className='patient-profile-fields'>
                     <NameField Name='Insurance Member ID' value={idNumber} onChange={(e) => setIdNumber(e.target.value)} className="Rad" />
@@ -199,22 +196,49 @@ const NewPatient: React.FC = () => {
                 </div>
             </div>
             <div className="patient-profile-right-side">
-                <div className="outerscroll-rx">
-                    <div className="rx-item-list-header"><p>Patient list</p></div>
-                    <div className="scrollable-rx-list">
-                        {patients.map(patient => (
-                            <dl className="rx-items-individual" key={patient.id}>
-                                <dt className="rx-list-name">Id: {patient.id}</dt>
-                                <dt className="rx-list-name">Name: {patient.first_name} {patient.last_name}</dt>
-                                <dt className="rx-list-dob">DOB: {patient.date_of_birth}</dt>
-                                <button onClick={() => handleEdit(patient)}>Edit</button>
-                                <button onClick={() => handleDelete(patient.id)}>Delete</button>
-                            </dl>
-                        ))}
+                <div className="container mt-4">
+                    <div className="card shadow-sm">
+                        <div className="card-header bg-primary text-white">
+                            <h5 className="mb-0">Patient List</h5>
+                        </div>
+                        <div className="scrollable-rx-list bg-light border rounded p-3" style={{ maxHeight: '400px', overflowY: 'auto' }}>
+                            {patients.map(patient => (
+                                <div className="mb-3 p-3 bg-white border rounded shadow-sm" key={patient.id}>
+                                    <dl className="row">
+                                        <dt className="col-sm-3">ID:</dt>
+                                        <dd className="col-sm-9">{patient.id}</dd>
+
+                                        <dt className="col-sm-3">Full name:</dt>
+                                        <dd className="col-sm-9">{patient.first_name} {patient.last_name}</dd>
+
+                                        <dt className="col-sm-3">Phone:</dt>
+                                        <dd className="col-sm-9">{patient.phone_number}</dd>
+
+                                        <dt className="col-sm-3">Date of Birth:</dt>
+                                        <dd className="col-sm-9">{patient.date_of_birth}</dd>
+                                    </dl>
+                                    <button className="btn btn-primary" onClick={() => handleEdit(patient)}>Edit</button>
+                                    <button className="btn btn-danger mx-2" onClick={() => handleDelete(patient.id)}>Delete</button>
+                                    <button className="btn btn-info" onClick={() => handleFetchPrescriptions(patient.id)}>Show Prescriptions</button>
+
+                                    {selectedPrescriptions.length > 0 && (
+                                        <div className="prescription-list mt-3">
+                                            <h6>Prescriptions:</h6>
+                                            <ul>
+                                                {selectedPrescriptions.map((prescription, index) => (
+                                                    <li key={index}>{prescription}</li>
+                                                ))}
+                                            </ul>
+                                        </div>
+                                    )}
+                                </div>
+                            ))}
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
     );
 };
+
 export default NewPatient;
