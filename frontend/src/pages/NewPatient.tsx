@@ -126,15 +126,43 @@ const NewPatient: React.FC = () => {
     };
 
     const handleDelete = async (id: number) => {
+        // Confirm the deletion with the user
+        const confirmed = window.confirm("Are you sure you want to delete this patient?");
+        if (!confirmed) return;
+
         try {
-            await fetch(`http://localhost:8000/patients/${id}`, {
+            const response = await fetch(`http://localhost:8000/patients/${id}`, {
                 method: "DELETE",
             });
-            fetchPatients();
+
+            if (response.ok) {
+                console.log("Patient deleted successfully.");
+                // Optionally clear the selected prescriptions if viewing the deleted patient
+                setSelectedPrescriptions([]);
+                // Fetch updated list of patients
+                fetchPatients();
+            } else {
+                const errorData = await response.json();
+                console.error("Failed to delete the patient:", errorData.detail || "Unknown error");
+                alert(`Failed to delete the patient: ${errorData.detail || "Unknown error"}`);
+            }
         } catch (error) {
             console.error("Error deleting patient", error);
+            alert("An error occurred while trying to delete the patient.");
         }
     };
+
+
+    // const handleDelete = async (id: number) => {
+    //     try {
+    //         await fetch(`http://localhost:8000/patients/${id}`, {
+    //             method: "DELETE",
+    //         });
+    //         fetchPatients();
+    //     } catch (error) {
+    //         console.error("Error deleting patient", error);
+    //     }
+    // };
 
     const handleFetchPrescriptions = async (id: number) => {
         try {
@@ -219,7 +247,7 @@ const NewPatient: React.FC = () => {
                                     </dl>
                                     <button className="btn btn-primary" onClick={() => handleEdit(patient)}>Edit</button>
                                     <button className="btn btn-danger mx-2" onClick={() => handleDelete(patient.id)}>Delete</button>
-                                    <button className="btn btn-info" onClick={() => handleFetchPrescriptions(patient.id)}>Show Prescriptions</button>
+                                    {/* <button className="btn btn-info" onClick={() => handleFetchPrescriptions(patient.id)}>Show Prescriptions</button> */}
 
                                     {selectedPrescriptions.length > 0 && (
                                         <div className="prescription-list mt-3">

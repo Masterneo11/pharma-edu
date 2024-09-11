@@ -1,217 +1,89 @@
 
-// import React, { useState, useEffect } from 'react';
-
-// // Prescription Interface matching the backend response
-// interface PrescriptionBasicInfo {
-//     rx_number: string;
-//     first_name: string;
-//     last_name: string;
-//     date_of_birth: string;
-// }
-
-// const PrescriptionManagement: React.FC = () => {
-//     const [prescriptions, setPrescriptions] = useState<PrescriptionBasicInfo[]>([]);
-//     const [selectedPrescription, setSelectedPrescription] = useState<PrescriptionBasicInfo | null>(null);
-//     const [formState, setFormState] = useState({
-//         rx_number: '',
-//         first_name: '',
-//         last_name: '',
-//         date_of_birth: '',
-//     });
-
-//     useEffect(() => {
-//         fetchPrescriptions();
-//     }, []);
-
-//     const fetchPrescriptions = async () => {
-//         try {
-//             const response = await fetch('http://localhost:8000/prescriptions');
-//             const data = await response.json();
-//             console.log(data); // Debugging: check what data is returned
-//             setPrescriptions(Array.from(data)); // Ensure data is converted from a map to an array
-//         } catch (error) {
-//             console.error('Error fetching prescriptions', error);
-//         }
-//     };
-
-//     const handleEdit = (prescription: PrescriptionBasicInfo) => {
-//         setSelectedPrescription(prescription);
-//         setFormState({
-//             rx_number: prescription.rx_number,
-//             first_name: prescription.first_name,
-//             last_name: prescription.last_name,
-//             date_of_birth: prescription.date_of_birth,
-//         });
-//     };
-
-//     const handleDelete = async (rx_number: string) => {
-//         try {
-//             await fetch(`http://localhost:8000/prescriptions/${rx_number}`, {
-//                 method: 'DELETE',
-//             });
-//             fetchPrescriptions(); // Refetch the prescriptions after deletion
-//         } catch (error) {
-//             console.error('Error deleting prescription', error);
-//         }
-//     };
-
-//     const handleFormChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-//         const { name, value } = e.target;
-//         setFormState((prevState) => ({
-//             ...prevState,
-//             [name]: value,
-//         }));
-//     };
-
-//     const handleEditSubmit = async (e: React.FormEvent) => {
-//         e.preventDefault();
-//         if (!selectedPrescription) return;
-
-//         try {
-//             await fetch(`http://localhost:8000/prescriptions/${selectedPrescription.rx_number}`, {
-//                 method: 'PATCH',
-//                 headers: {
-//                     'Content-Type': 'application/json',
-//                 },
-//                 body: JSON.stringify(formState),
-//             });
-//             fetchPrescriptions(); // Refetch after updating
-//             setSelectedPrescription(null); // Clear form after submitting
-//         } catch (error) {
-//             console.error('Error updating prescription', error);
-//         }
-//     };
-
-//     return (
-//         <div className='homeformat'>
-//             <div className='EnterNewRxInfo'>
-//                 <div>
-//                     <h2>Prescription Management</h2>
-
-//                     {/* Check if there are prescriptions */}
-//                     <div className="scrollable-rx-list bg-light border rounded p-3" style={{ maxHeight: '400px', overflowY: 'auto' }}>
-//                         {prescriptions.length === 0 ? (
-//                             <p>No prescriptions found</p>
-//                         ) : (
-//                             prescriptions.map((prescription) => (
-//                                 <div className="mb-3 p-3 bg-white border rounded shadow-sm" key={prescription.rx_number}>
-//                                     <dl className="row">
-//                                         <dt className="col-sm-3">Rx Number:</dt>
-//                                         <dd className="col-sm-9">{prescription.rx_number}</dd>
-
-//                                         <dt className="col-sm-3">First Name:</dt>
-//                                         <dd className="col-sm-9">{prescription.first_name}</dd>
-
-//                                         <dt className="col-sm-3">Last Name:</dt>
-//                                         <dd className="col-sm-9">{prescription.last_name}</dd>
-
-//                                         <dt className="col-sm-3">Date of Birth:</dt>
-//                                         <dd className="col-sm-9">{prescription.date_of_birth}</dd>
-//                                     </dl>
-//                                     <div className="d-flex justify-content-end">
-//                                         <button onClick={() => handleEdit(prescription)} className="btn btn-primary me-2">
-//                                             Edit
-//                                         </button>
-//                                         <button onClick={() => handleDelete(prescription.rx_number)} className="btn btn-danger">
-//                                             Delete
-//                                         </button>
-//                                     </div>
-//                                 </div>
-//                             ))
-//                         )}
-//                     </div>
-
-//                     {/* Edit form logic */}
-//                     {selectedPrescription && (
-//                         <form onSubmit={handleEditSubmit}>
-//                             <h3>Edit Prescription</h3>
-
-//                             <div className="form-group">
-//                                 <label>Rx Number</label>
-//                                 <input
-//                                     type="text"
-//                                     name="rx_number"
-//                                     value={formState.rx_number}
-//                                     onChange={handleFormChange}
-//                                     className="form-control"
-//                                     readOnly // We assume that the Rx Number is not editable
-//                                 />
-//                             </div>
-//                             <div className="form-group">
-//                                 <label>First Name</label>
-//                                 <input
-//                                     type="text"
-//                                     name="first_name"
-//                                     value={formState.first_name}
-//                                     onChange={handleFormChange}
-//                                     className="form-control"
-//                                 />
-//                             </div>
-//                             <div className="form-group">
-//                                 <label>Last Name</label>
-//                                 <input
-//                                     type="text"
-//                                     name="last_name"
-//                                     value={formState.last_name}
-//                                     onChange={handleFormChange}
-//                                     className="form-control"
-//                                 />
-//                             </div>
-//                             <div className="form-group">
-//                                 <label>Date of Birth</label>
-//                                 <input
-//                                     type="text"
-//                                     name="date_of_birth"
-//                                     value={formState.date_of_birth}
-//                                     onChange={handleFormChange}
-//                                     className="form-control"
-//                                 />
-//                             </div>
-//                             <button type="submit" className="btn btn-success mt-2">
-//                                 Save Changes
-//                             </button>
-//                         </form>
-//                     )}
-//                 </div>
-//             </div>
-//         </div>
-//     );
-// };
-
-// export default PrescriptionManagement;
-
 import React, { useState, useEffect } from 'react';
 import NameField from '../components/NameField';
 
-interface PrescriptionBasicInfo {
-    rx_number: string;
+interface Prescription {
+    rx_number: number;
+    directions: string;
+    quantity: number;
+    refills: number;
+    tech_initials: string;
     patient_id: number;
     prescriber_id: number;
     prescribed_date: string;
-    rx_item_id: number;
-    directions: string;
-    quantity: number;
+    rxitem: number;
     quantity_dispensed: number;
-    refills: number;
     status: string;
-    tech_initials: string;
 }
 
 const PrescriptionManagement: React.FC = () => {
-    const [prescriptions, setPrescriptions] = useState<PrescriptionBasicInfo[]>([]);
-    const [selectedPrescription, setSelectedPrescription] = useState<PrescriptionBasicInfo | null>(null);
-    const [formState, setFormState] = useState({
-        patient_id: 0,
-        prescriber_id: 0,
-        prescribed_date: '',
-        rx_item_id: 0,
-        directions: '',
-        quantity: 0,
-        quantity_dispensed: 0,
-        refills: 0,
-        status: 'pending',
-        tech_initials: '',
-    });
+    const [prescriptions, setPrescriptions] = useState<Prescription[]>([]);
+    const [rxNumber, setRxNumber] = useState<number>(8);
+    const [directions, setDirections] = useState<string>("Take as prescribed");
+    const [quantity, setQuantity] = useState<number>(0);
+    const [refills, setRefills] = useState<number>(0);
+    const [techInitials, setTechInitials] = useState<string>("");
+    const [patientId, setPatientId] = useState<number>(26);
+    const [prescriberId, setPrescriberId] = useState<number>(13);
+    const [prescribedDate, setPrescribedDate] = useState<string>("2005-05-05");
+    const [rxItemId, setRxItemId] = useState<number>(22);
+    const [quantityDispensed, setQuantityDispensed] = useState<number>(0);
+    const [status, setStatus] = useState<string>("pending");
+    const [selectedPrescription, setSelectedPrescription] = useState<Prescription | null>(null);
+    const [fetchId, setFetchId] = useState<number | null>(null);
+
+    const handleClick = async (event: React.MouseEvent<HTMLButtonElement, MouseEvent>): Promise<void> => {
+        event.preventDefault();
+
+        const prescriptionData = {
+            rx_number: rxNumber,
+            directions: directions,
+            quantity: quantity,
+            refills: refills,
+            tech_initials: techInitials,
+            patient_id: patientId,
+            prescriber_id: prescriberId,
+            prescribed_date: prescribedDate,
+            rxitem: rxItemId,
+            quantity_dispensed: quantityDispensed,
+            status: status,
+        };
+
+        const url = `http://localhost:8000/prescriptions/${rxNumber}`;
+        const method = "PATCH";
+        const response = await fetch(url, {
+            method: method,
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify(prescriptionData),
+        });
+
+        if (response.ok) {
+            fetchPrescriptions();
+        }
+    };
+    const handleClickIdInfo = async (prescriptionId: number) => {
+        try {
+            const response = await fetch(`http://localhost:8000/prescriptions/${prescriptionId}`, {
+                method: "GET",
+                headers: {
+                    "Content-Type": "application/json"
+                }
+            });
+
+            if (!response.ok) {
+                throw new Error("Failed to fetch prescription details.");
+            }
+
+            const data = await response.json();
+            console.log("Prescription data:", data);
+            // Update state with fetched data, e.g., setPrescription(data);
+        } catch (error) {
+            console.error(error);
+        }
+    };
+
 
     useEffect(() => {
         fetchPrescriptions();
@@ -219,47 +91,59 @@ const PrescriptionManagement: React.FC = () => {
 
     const fetchPrescriptions = async () => {
         try {
-            const response = await fetch('http://localhost:8000/prescriptions');
+            const response = await fetch(`http://localhost:8000/prescriptions`);
+            // const response = await fetch(`http://localhost:8000/prescription/${prescription.rxitem}`);
+
             const data = await response.json();
-            setPrescriptions(Array.from(data)); // Convert map to array if needed
+            console.log(data); // Debugging: check what data is returned
+            setPrescriptions(Array.isArray(data) ? data : []); // Ensure data is converted from a map to an array
         } catch (error) {
             console.error('Error fetching prescriptions', error);
         }
     };
+    const handleEdit = async (prescription: Prescription) => {
+        const response = await fetch(`http://localhost:8000/prescriptions/${prescription.rx_number}`);
+        const data = await response.json();
 
-    const handleEdit = (prescription: PrescriptionBasicInfo) => {
-        setSelectedPrescription(prescription);
-        setFormState({
-            patient_id: prescription.patient_id,
-            prescriber_id: prescription.prescriber_id,
-            prescribed_date: prescription.prescribed_date,
-            rx_item_id: prescription.rx_item_id,
-            directions: prescription.directions,
-            quantity: prescription.quantity,
-            quantity_dispensed: prescription.quantity_dispensed,
-            refills: prescription.refills,
-            status: prescription.status,
-            tech_initials: prescription.tech_initials,
-        });
+        setSelectedPrescription(data);
+        setRxNumber(data.rx_number);
+        setDirections(data.directions);
+        setQuantity(data.quantity);
+        setRefills(data.refills);
+        setTechInitials(data.tech_initials);
+        setPatientId(data.patient_id);
+        setPrescriberId(data.prescriber_id);
+        setPrescribedDate(data.prescribed_date);
+        setRxItemId(data.rx_item_id);
+        setQuantityDispensed(data.quantity_dispensed);
+        setStatus(data.status);
     };
 
-    const handleDelete = async (rx_number: string) => {
+    //     setSelectedPrescription(prescription);
+    //     setRxNumber(prescription.rx_number);
+    //     setDirections(prescription.directions);
+    //     setQuantity(prescription.quantity);
+    //     setRefills(prescription.refills);
+    //     setTechInitials(prescription.tech_initials);
+    //     setPatientId(prescription.patient_id);
+    //     setPrescriberId(prescription.prescriber_id);
+    //     setPrescribedDate(prescription.prescribed_date);
+    //     setRxItemId(prescription.rx_item_id);
+    //     setQuantityDispensed(prescription.quantity_dispensed);
+    //     setStatus(prescription.status);
+
+    //     console.log(prescription)
+    // };
+
+    const handleDelete = async (rxNumber: number) => {
         try {
-            await fetch(`http://localhost:8000/prescriptions/${rx_number}`, {
+            await fetch(`http://localhost:8000/prescriptions/${rxNumber}`, {
                 method: 'DELETE',
             });
-            fetchPrescriptions(); // Refetch after deletion
+            fetchPrescriptions(); // Refetch the prescriptions after deletion
         } catch (error) {
             console.error('Error deleting prescription', error);
         }
-    };
-
-    const handleFormChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
-        const { name, value } = e.target;
-        setFormState((prevState) => ({
-            ...prevState,
-            [name]: value,
-        }));
     };
 
     const handleEditSubmit = async (e: React.FormEvent) => {
@@ -272,7 +156,19 @@ const PrescriptionManagement: React.FC = () => {
                 headers: {
                     'Content-Type': 'application/json',
                 },
-                body: JSON.stringify(formState),
+                body: JSON.stringify({
+                    patientId: patientId,
+                    prescriber_id: prescriberId,
+                    prescribed_date: prescribedDate,
+                    rxitem: rxItemId,
+                    directions: directions,
+                    quantity: quantity,
+                    quantity_dispensed: quantityDispensed,
+                    refills: refills,
+                    status: status,
+                    tech_initials: techInitials,
+
+                }),
             });
             fetchPrescriptions(); // Refetch after updating
             setSelectedPrescription(null); // Clear form after submitting
@@ -281,188 +177,352 @@ const PrescriptionManagement: React.FC = () => {
         }
     };
 
+    const handleFormChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
+        const { name, value } = e.target;
+        switch (name) {
+            case 'rx_number':
+                setRxNumber(Number(value));
+                break;
+            case 'directions':
+                setDirections(value);
+                break;
+            case 'quantity':
+                setQuantity(Number(value));
+                break;
+            case 'refills':
+                setRefills(Number(value));
+                break;
+            case 'tech_initials':
+                setTechInitials(value);
+                break;
+            case 'patient_id':
+                setPatientId(Number(value));
+                break;
+            case 'prescriber_id':
+                setPrescriberId(Number(value));
+                break;
+            case 'prescribed_date':
+                setPrescribedDate(value);
+                break;
+            case 'rx_item_id':
+                setRxItemId(Number(value));
+                break;
+            case 'quantity_dispensed':
+                setQuantityDispensed(Number(value));
+                break;
+            case 'status':
+                setStatus(value);
+                break;
+            default:
+                break;
+        }
+    };
+
     return (
-        <div className='homeformat'>
-            <div className='EnterNewRxInfo'>
+        <>
+            <div className='homeformat'>
                 <div>
                     <h2>Prescription Management</h2>
 
-                    {/* Check if there are prescriptions */}
-                    <div className="scrollable-rx-list bg-light border rounded p-3" style={{ maxHeight: '400px', overflowY: 'auto' }}>
+                    <div className="scrollable-rx-list bg-light border rounded p-3" style={{ maxWidth: '800px', maxHeight: '400px', overflowY: 'auto' }}>
                         {prescriptions.length === 0 ? (
                             <p>No prescriptions found</p>
                         ) : (
                             prescriptions.map((prescription) => (
                                 <div className="mb-3 p-3 bg-white border rounded shadow-sm" key={prescription.rx_number}>
-                                    <dl className="row">
-                                        <dt className="col-sm-3">Rx Number:</dt>
-                                        <dd className="col-sm-9">{prescription.rx_number}</dd>
-
-                                        <dt className="col-sm-3">Patient ID:</dt>
-                                        <dd className="col-sm-9">{prescription.patient_id}</dd>
-
-                                        <dt className="col-sm-3">Prescriber ID:</dt>
-                                        <dd className="col-sm-9">{prescription.prescriber_id}</dd>
-
-                                        <dt className="col-sm-3">Prescribed Date:</dt>
-                                        <dd className="col-sm-9">{prescription.prescribed_date}</dd>
-
-                                        <dt className="col-sm-3">Directions:</dt>
-                                        <dd className="col-sm-9">{prescription.directions}</dd>
-
-                                        <dt className="col-sm-3">Quantity:</dt>
-                                        <dd className="col-sm-9">{prescription.quantity}</dd>
-
-                                        <dt className="col-sm-3">Quantity Dispensed:</dt>
-                                        <dd className="col-sm-9">{prescription.quantity_dispensed}</dd>
-
-                                        <dt className="col-sm-3">Refills:</dt>
-                                        <dd className="col-sm-9">{prescription.refills}</dd>
-
-                                        <dt className="col-sm-3">Status:</dt>
-                                        <dd className="col-sm-9">{prescription.status}</dd>
-
-                                        <dt className="col-sm-3">Technician Initials:</dt>
-                                        <dd className="col-sm-9">{prescription.tech_initials}</dd>
-                                    </dl>
+                                    <div className="row">
+                                        <div className="col-sm-3">
+                                            <p className="fw-bold">Rx Number:</p>
+                                            <p>{prescription.rx_number}</p>
+                                        </div>
+                                        <div className="col-sm-3">
+                                            <p className="fw-bold">First Name:</p>
+                                            <p>{prescription.first_name}</p>
+                                        </div>
+                                        <div className="col-sm-3">
+                                            <p className="fw-bold">Last Name:</p>
+                                            <p>{prescription.last_name}</p>
+                                        </div>
+                                        <div className="col-sm-3">
+                                            <p className="fw-bold">Date of Birth:</p>
+                                            <p>{prescription.date_of_birth}</p>
+                                        </div>
+                                    </div>
                                     <div className="d-flex justify-content-end">
-                                        <button onClick={() => handleEdit(prescription)} className="btn btn-primary me-2">
-                                            Edit
-                                        </button>
-                                        <button onClick={() => handleDelete(prescription.rx_number)} className="btn btn-danger">
-                                            Delete
-                                        </button>
+                                        <button onClick={() => handleEdit(prescription)} className="btn btn-primary me-2">Edit</button>
+                                        <button onClick={() => handleDelete(prescription.rx_number)} className="btn btn-danger">Delete</button>
                                     </div>
                                 </div>
                             ))
                         )}
                     </div>
+                    {/* Retrieve Prescription by ID */}
+                    {/* <form onSubmit={handleClickIdInfo} className="mt-4">
+                        <div className="form-group">
+                            <label>Prescription ID</label>
+                            <input
+                                type="number"
+                                value={fetchId ?? ''}
+                                onChange={(e) => setFetchId(Number(e.target.value))}
+                                className="Rad"
+                            />
+                        </div>
+                        <button type="submit" className="btn btn-info mt-2">Fetch Prescription</button>
+                    </form> */}
 
-                    {/* Edit form logic */}
+
+                    {/* Edit form */}
                     {selectedPrescription && (
-                        <form onSubmit={handleEditSubmit}>
-                            <h3>Edit Prescription</h3>
+                        <form onSubmit={handleEditSubmit} className="mt-4">
+                            <div className="row mt-2"><div className="col-md-4">
+                            </div>
+                                <div className="col-md-4">
+                                </div>
+                            </div>
+                            <div className="row mt-2"><div className="col-md-6">
+                                <NameField Name="Patient ID" value={patientId} onChange={(e) => setPatientId(Number(e.target.value))} className="Rad" />
+                                <NameField Name="doctor id" value={prescriberId} onChange={(e) => setPrescriberId(Number(e.target.value))} className="Rad" />
 
-                            <div className="form-group">
-                                <label>Patient ID</label>
-                                <input
-                                    type="number"
-                                    name="patient_id"
-                                    value={formState.patient_id}
-                                    onChange={handleFormChange}
-                                    className="form-control"
-                                />
-                            </div>
-                            <div className="form-group">
-                                <label>Prescriber ID</label>
-                                <input
-                                    type="number"
-                                    name="prescriber_id"
-                                    value={formState.prescriber_id}
-                                    onChange={handleFormChange}
-                                    className="form-control"
-                                />
-                            </div>
+                            </div></div>
+                            <NameField Name="Prescribed Date" value={prescribedDate} onChange={(e) => setPrescribedDate(e.target.value)} className="Rad" />
+                            <NameField Name="Rx Item ID" value={rxItemId} onChange={(e) => setRxItemId(Number(e.target.value))} className="Rad" />
+                            <NameField Name="directions" value={directions} onChange={(e) => setDirections(e.target.value)} className="Rad" />
+                            <NameField Name="Quantity" value={quantity} onChange={(e) => setQuantity(Number(e.target.value))} className="Rad" />
+                            <NameField Name="Quantity Dispensed" value={quantityDispensed} onChange={(e) => setQuantityDispensed(Number(e.target.value))} className="Rad" />
 
-
-
-
-
-                            <div className="form-group">
-
-                                <input
-                                    type="string"
-                                    name="prescribed_date"
-                                    value={formState.prescribed_date}
-                                    onChange={handleFormChange}
-                                    className="Rad"
-                                />
-
-                            </div>
-                            <div className="form-group">
-                                <label>Rx Item ID</label>
-                                <input
-                                    type="number"
-                                    name="rx_item_id"
-                                    value={formState.rx_item_id}
-                                    onChange={handleFormChange}
-                                    className="form-control"
-                                />
-                            </div>
-                            <div className="form-group">
-                                <label>Directions</label>
-                                <input
-                                    type="text"
-                                    name="directions"
-                                    value={formState.directions}
-                                    onChange={handleFormChange}
-                                    className="form-control"
-                                />
-                            </div>
-                            <div className="form-group">
-                                <label>Quantity</label>
-                                <input
-                                    type="number"
-                                    name="quantity"
-                                    value={formState.quantity}
-                                    onChange={handleFormChange}
-                                    className="form-control"
-                                />
-                            </div>
-                            <div className="form-group">
-                                <label>Quantity Dispensed</label>
-                                <input
-                                    type="number"
-                                    name="quantity_dispensed"
-                                    value={formState.quantity_dispensed}
-                                    onChange={handleFormChange}
-                                    className="form-control"
-                                />
-                            </div>
-                            <div className="form-group">
-                                <label>Refills</label>
-                                <input
-                                    type="number"
-                                    name="refills"
-                                    value={formState.refills}
-                                    onChange={handleFormChange}
-                                    className="form-control"
-                                />
-                            </div>
-                            <div className="form-group">
-                                <label>Status</label>
-                                <select
-                                    name="status"
-                                    value={formState.status}
-                                    onChange={handleFormChange}
-                                    className="form-control"
-                                >
-                                    <option value="pending">Pending</option>
-                                    <option value="filled">Filled</option>
-                                    <option value="canceled">Canceled</option>
-                                </select>
-                            </div>
-                            <div className="form-group">
-                                <label>Technician Initials</label>
-                                <input
-                                    type="text"
-                                    name="tech_initials"
-                                    value={formState.tech_initials}
-                                    onChange={handleFormChange}
-                                    className="form-control"
-                                />
-                            </div>
-                            <button type="submit" className="btn btn-success mt-2">
-                                Save Changes
-                            </button>
+                            <NameField Name="Refills" value={refills} onChange={(e) => setRefills(Number(e.target.value))} className="Rad" />
+                            <NameField Name="Status" value={status} onChange={(e) => setStatus(e.target.value)} className="Rad" />
+                            <NameField Name="Tech Initials" value={techInitials} onChange={(e) => setTechInitials(e.target.value)} className="Rad" />
+                            <button type="submit" className="btn btn-primary mt-3">Save Changes</button>
                         </form>
                     )}
                 </div>
             </div>
-        </div>
+        </>
     );
 };
 
 export default PrescriptionManagement;
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+// import React, { useState, useEffect } from 'react';
+
+// interface Prescription {
+//     rx_number: number;
+//     directions: string;
+//     quantity: number;
+//     refills: number;
+//     tech_initials: string;
+//     patient_id: number;
+//     prescriber_id: number;
+//     prescribed_date: string;
+//     rx_item_id: number;
+//     quantity_dispensed: number;
+//     status: string;
+// }
+
+// const PrescriptionManagement: React.FC = () => {
+//     const [prescriptions, setPrescriptions] = useState<Prescription[]>([]);
+//     const [rxNumber, setRxNumber] = useState<number>(8);
+//     const [directions, setDirections] = useState<string>("Take as prescribed");
+//     const [quantity, setQuantity] = useState<number>(0);
+//     const [refills, setRefills] = useState<number>(0);
+//     const [techInitials, setTechInitials] = useState<string>("");
+//     const [patientId, setPatientId] = useState<number>(26);
+//     const [prescriberId, setPrescriberId] = useState<number>(13);
+//     const [prescribedDate, setPrescribedDate] = useState<string>("2005-05-05");
+//     const [rxItemId, setRxItemId] = useState<number>(22);
+//     const [quantityDispensed, setQuantityDispensed] = useState<number>(0);
+//     const [status, setStatus] = useState<string>("pending");
+//     const [editID, seteditID] = useState<number>(0);
+
+//     const handleClick = async (event: React.MouseEvent<HTMLButtonElement, MouseEvent>): Promise<void> => {
+//         event.preventDefault();
+
+
+//         const prescriptionData = {
+//             rxNumber: rxNumber,
+//             directions: directions,
+//             quantity: quantity,
+//             refills: refills,
+//             techInitials: techInitials,
+//             patientId: patientId,
+//             prescriberId: prescriberId,
+//             prescribedDate: prescribedDate,
+//             rxItemId: rxItemId,
+//             quantityDispensed: quantityDispensed,
+//             status: status,
+//         };
+
+//         const url = editID
+//             `http:localhost:8000/prescriprtions/${editID}`
+//         const method = editID "PATCH";
+//         const response = await fetch(url, {
+//             method: method,
+//             headers: {
+//                 "Content-Type:" "application/json"
+//             },
+//             body: JSON.stringify(prescriptionData)
+//         });
+
+
+
+//         useEffect(() => {
+//             fetchPrescriptions();
+//         }, []);
+
+//         const fetchPrescriptions = async () => {
+//             try {
+//                 const response = await fetch('http://localhost:8000/prescriptions');
+//                 const data = await response.json();
+//                 console.log(data); // Debugging: check what data is returned
+//                 setPrescriptions(Array.isArray(data) ? data : []); // Ensure data is converted from a map to an array
+//             } catch (error) {
+//                 console.error('Error fetching prescriptions', error);
+//             }
+//         };
+
+//         const handleEdit = (prescription: Prescription) => {
+//             setSelectedPrescription(prescription);
+//             setRxNumber(prescription.rx_number);
+//             setDirections(prescription.directions);
+//             setQuantity(prescription.quantity);
+//             setRefills(prescription.refills);
+//             setTechInitials(prescription.tech_initials);
+//             setPatientId(prescription.patient_id);
+//             setPrescriberId(prescription.prescriber_id);
+//             setPrescribedDate(prescription.prescribed_date);
+//             setRxItemId(prescription.rx_item_id);
+//             setQuantityDispensed(prescription.quantity_dispensed);
+//             setStatus(prescription.status);
+//         };
+
+//         const handleDelete = async (rxNumber: number) => {
+//             try {
+//                 await fetch(`http://localhost:8000/prescriptions/${rxNumber}`, {
+//                     method: 'DELETE',
+//                 });
+//                 fetchPrescriptions(); // Refetch the prescriptions after deletion
+//             } catch (error) {
+//                 console.error('Error deleting prescription', error);
+//             }
+//         };
+
+
+//         const handleEditSubmit = async (e: React.FormEvent) => {
+//             e.preventDefault();
+//             if (!selectedPrescription) return;
+
+//             try {
+//                 await fetch(`http://localhost:8000/prescriptions/${selectedPrescription.rx_number}`, {
+//                     method: 'PATCH',
+//                     headers: {
+//                         'Content-Type': 'application/json',
+//                     },
+//                     body: JSON.stringify({
+//                         rx_number: rxNumber,
+//                         directions,
+//                         quantity,
+//                         refills,
+//                         tech_initials: techInitials,
+//                         patient_id: patientId,
+//                         prescriber_id: prescriberId,
+//                         prescribed_date: prescribedDate,
+//                         rx_item_id: rxItemId,
+//                         quantity_dispensed: quantityDispensed,
+//                         status
+//                     }),
+//                 });
+//                 fetchPrescriptions(); // Refetch after updating
+//                 setSelectedPrescription(null); // Clear form after submitting
+//             } catch (error) {
+//                 console.error('Error updating prescription', error);
+//             }
+//         };
+
+//         return (
+//             <>
+//                 <div className='homeformat'>
+//                     <div>
+//                         <h2>Prescription Management</h2>
+
+//                         <div className="scrollable-rx-list bg-light border rounded p-3" style={{ maxWidth: '800px', maxHeight: '400px', overflowY: 'auto' }}>
+//                             {prescriptions.length === 0 ? (
+//                                 <p>No prescriptions found</p>
+//                             ) : (
+//                                 prescriptions.map((prescription) => (
+//                                     <div className="mb-3 p-3 bg-white border rounded shadow-sm" key={prescription.rx_number}>
+//                                         <div className="row">
+//                                             <div className="col-sm-3">
+//                                                 <p className="fw-bold">Rx Number:</p>
+//                                                 <p>{prescription.rx_number}</p>
+//                                             </div>
+//                                             <div className="col-sm-3">
+//                                                 <p className="fw-bold">First Name:</p>
+//                                                 <p>{prescription.first_name}</p>
+//                                             </div>
+//                                             <div className="col-sm-3">
+//                                                 <p className="fw-bold">Last Name:</p>
+//                                                 <p>{prescription.last_name}</p>
+//                                             </div>
+//                                             <div className="col-sm-3">
+//                                                 <p className="fw-bold">Date of Birth:</p>
+//                                                 <p>{prescription.date_of_birth}</p>
+//                                             </div>
+//                                         </div>
+//                                         <div className="d-flex justify-content-end">
+//                                             <button onClick={() => handleEdit(prescription)} className="btn btn-primary me-2">Edit</button>
+//                                             <button onClick={() => handleDelete(prescription.rx_number)} className="btn btn-danger">Delete</button>
+//                                         </div>
+//                                     </div>
+//                                 ))
+//                             )}
+//                         </div>
+
+//                                 <div className="row">
+//                                     <div className="col-md-6">
+//                                         <div className="form-group"><label>Rx Number</label><input type="text" name="rx_number" value={rxNumber} onChange={handleFormChange} className="Rad" readOnly /></div>
+//                                         <div className="form-group"><label>Patient ID</label><input type="number" name="patient_id" value={patientId} onChange={handleFormChange} className="Rad" /></div>
+//                                         <div className="form-group"><label>Prescriber ID</label><input type="number" name="prescriber_id" value={prescriberId} onChange={handleFormChange} className="Rad" /></div>
+//                                         <div className="form-group"><label>Prescribed Date</label><input type="date" name="prescribed_date" value={prescribedDate} onChange={handleFormChange} className="Rad" /></div>
+//                                         <div className="form-group"><label>Rx Item ID</label><input type="number" name="rx_item_id" value={rxItemId} onChange={handleFormChange} className="Rad" /></div>
+//                                         <div className="form-group"><label>Directions</label><input type="text" name="directions" value={directions} onChange={handleFormChange} className="Rad" /></div>
+//                                         <div className="form-group"><label>Quantity</label><input type="number" name="quantity" value={quantity} onChange={handleFormChange} className="Rad" /></div>
+//                                     </div>
+//                                     <div className="col-md-6">
+//                                         <div className="form-group"><label>Quantity Dispensed</label><input type="number" name="quantity_dispensed" value={quantityDispensed} onChange={handleFormChange} className="Rad" /></div>
+//                                         <div className="form-group"><label>Refills</label><input type="number" name="refills" value={refills} onChange={handleFormChange} className="Rad" /></div>
+//                                         <div className="form-group"><label>Status</label><select name="status" value={status} onChange={handleFormChange} className="Rad"><option value="pending">Pending</option><option value="filled">Filled</option><option value="canceled">Canceled</option></select></div>
+//                                         <div className="form-group"><label>Technician Initials</label><input type="text" name="tech_initials" value={techInitials} onChange={handleFormChange} className="Rad" /></div>
+//                                         <div className="form-group"><label>First Name</label><input type="text" name="first_name" value={formState.first_name} onChange={handleFormChange} className="Rad" /></div>
+//                                         <div className="form-group"><label>Last Name</label><input type="text" name="last_name" value={formState.last_name} onChange={handleFormChange} className="Rad" /></div>
+//                                         <div className="form-group"><label>Date of Birth</label><input type="date" name="date_of_birth" value={formState.date_of_birth} onChange={handleFormChange} className="Rad" /></div>
+//                                     </div>
+//                                 </div>
+//                                 <button type="submit" className="btn btn-success mt-3">Save Changes</button>
+//                             </form>
+//                         )}
+//                     </div>
+//                 </div>
+//             </>
+//         );
+//     };
+
+//     export default PrescriptionManagement;

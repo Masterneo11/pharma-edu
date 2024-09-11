@@ -1094,6 +1094,18 @@ align-items: center;
 justify-content: space-around;
 border-top: 1px solid white;
 }
+.EnterNewRxInfoPre {
+  display: flex;
+  margin-top: 20px;
+  height: 498px;
+  width: 1400px;
+  flex-direction: column;
+  background-color: #ffffff;
+  align-items: center;
+  justify-content: space-around;
+  border-top: 1px solid white;
+  }
+
 .EnterNewRxInfoNEW {
   display: flex;
   margin-top: 20px;
