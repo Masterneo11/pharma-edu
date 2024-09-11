@@ -31,6 +31,8 @@ const PrescriptionManagement: React.FC = () => {
     const [status, setStatus] = useState<string>("pending");
     const [selectedPrescription, setSelectedPrescription] = useState<Prescription | null>(null);
     const [fetchId, setFetchId] = useState<number | null>(null);
+    const [prescriptionArrayInfo, setPresctiptionarrayInfo] = useState<Prescription[]>([])
+
 
     const handleClick = async (event: React.MouseEvent<HTMLButtonElement, MouseEvent>): Promise<void> => {
         event.preventDefault();
@@ -58,6 +60,7 @@ const PrescriptionManagement: React.FC = () => {
             },
             body: JSON.stringify(prescriptionData),
         });
+
 
         if (response.ok) {
             fetchPrescriptions();
@@ -97,9 +100,21 @@ const PrescriptionManagement: React.FC = () => {
             const data = await response.json();
             console.log(data); // Debugging: check what data is returned
             setPrescriptions(Array.isArray(data) ? data : []); // Ensure data is converted from a map to an array
+            // const arrayss = [];
+            // for (let i = 0; i < data.length ; i ++) {
+            //     const specificPresInfo = await fetch(`http://localhost:8000/prescriptions/${data[i].rx_number}`);
+            //     const pareseinfo =await specificPresInfo.json();
+            //     arrayss.push(pareseinfo);
+
+            // }
+            // setPresctiptionarrayInfo(arrayss)
+
+
         } catch (error) {
             console.error('Error fetching prescriptions', error);
         }
+
+
     };
     const handleEdit = async (prescription: Prescription) => {
         const response = await fetch(`http://localhost:8000/prescriptions/${prescription.rx_number}`);
@@ -118,22 +133,6 @@ const PrescriptionManagement: React.FC = () => {
         setQuantityDispensed(data.quantity_dispensed);
         setStatus(data.status);
     };
-
-    //     setSelectedPrescription(prescription);
-    //     setRxNumber(prescription.rx_number);
-    //     setDirections(prescription.directions);
-    //     setQuantity(prescription.quantity);
-    //     setRefills(prescription.refills);
-    //     setTechInitials(prescription.tech_initials);
-    //     setPatientId(prescription.patient_id);
-    //     setPrescriberId(prescription.prescriber_id);
-    //     setPrescribedDate(prescription.prescribed_date);
-    //     setRxItemId(prescription.rx_item_id);
-    //     setQuantityDispensed(prescription.quantity_dispensed);
-    //     setStatus(prescription.status);
-
-    //     console.log(prescription)
-    // };
 
     const handleDelete = async (rxNumber: number) => {
         try {
@@ -177,46 +176,46 @@ const PrescriptionManagement: React.FC = () => {
         }
     };
 
-    const handleFormChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
-        const { name, value } = e.target;
-        switch (name) {
-            case 'rx_number':
-                setRxNumber(Number(value));
-                break;
-            case 'directions':
-                setDirections(value);
-                break;
-            case 'quantity':
-                setQuantity(Number(value));
-                break;
-            case 'refills':
-                setRefills(Number(value));
-                break;
-            case 'tech_initials':
-                setTechInitials(value);
-                break;
-            case 'patient_id':
-                setPatientId(Number(value));
-                break;
-            case 'prescriber_id':
-                setPrescriberId(Number(value));
-                break;
-            case 'prescribed_date':
-                setPrescribedDate(value);
-                break;
-            case 'rx_item_id':
-                setRxItemId(Number(value));
-                break;
-            case 'quantity_dispensed':
-                setQuantityDispensed(Number(value));
-                break;
-            case 'status':
-                setStatus(value);
-                break;
-            default:
-                break;
-        }
-    };
+    // const handleFormChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
+    //     const { name, value } = e.target;
+    //     switch (name) {
+    //         case 'rx_number':
+    //             setRxNumber(Number(value));
+    //             break;
+    //         case 'directions':
+    //             setDirections(value);
+    //             break;
+    //         case 'quantity':
+    //             setQuantity(Number(value));
+    //             break;
+    //         case 'refills':
+    //             setRefills(Number(value));
+    //             break;
+    //         case 'tech_initials':
+    //             setTechInitials(value);
+    //             break;
+    //         case 'patient_id':
+    //             setPatientId(Number(value));
+    //             break;
+    //         case 'prescriber_id':
+    //             setPrescriberId(Number(value));
+    //             break;
+    //         case 'prescribed_date':
+    //             setPrescribedDate(value);
+    //             break;
+    //         case 'rx_item_id':
+    //             setRxItemId(Number(value));
+    //             break;
+    //         case 'quantity_dispensed':
+    //             setQuantityDispensed(Number(value));
+    //             break;
+    //         case 'status':
+    //             setStatus(value);
+    //             break;
+    //         default:
+    //             break;
+    //     }
+    // };
 
     return (
         <>
@@ -247,7 +246,10 @@ const PrescriptionManagement: React.FC = () => {
                                             <p className="fw-bold">Date of Birth:</p>
                                             <p>{prescription.date_of_birth}</p>
                                         </div>
+
+
                                     </div>
+
                                     <div className="d-flex justify-content-end">
                                         <button onClick={() => handleEdit(prescription)} className="btn btn-primary me-2">Edit</button>
                                         <button onClick={() => handleDelete(prescription.rx_number)} className="btn btn-danger">Delete</button>
@@ -256,22 +258,6 @@ const PrescriptionManagement: React.FC = () => {
                             ))
                         )}
                     </div>
-                    {/* Retrieve Prescription by ID */}
-                    {/* <form onSubmit={handleClickIdInfo} className="mt-4">
-                        <div className="form-group">
-                            <label>Prescription ID</label>
-                            <input
-                                type="number"
-                                value={fetchId ?? ''}
-                                onChange={(e) => setFetchId(Number(e.target.value))}
-                                className="Rad"
-                            />
-                        </div>
-                        <button type="submit" className="btn btn-info mt-2">Fetch Prescription</button>
-                    </form> */}
-
-
-                    {/* Edit form */}
                     {selectedPrescription && (
                         <form onSubmit={handleEditSubmit} className="mt-4">
                             <div className="row mt-2"><div className="col-md-4">
