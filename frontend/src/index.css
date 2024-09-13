@@ -871,6 +871,17 @@ align-items: center;
 background-color: #ffffff;
 
 }
+.homeformater {
+  width: 100vw;
+height: 80vh;
+margin-top: 240px;
+display: flex;
+flex-direction: column;
+justify-content: center;
+align-items: center;
+background-color: #ffffff;
+
+} 
 
 .homeformatForNewRx {
 
@@ -1614,4 +1625,33 @@ a {
   font-size: 2rem;
   color: white !important;
   text-decoration: none !important;
+}
+
+.extraspace {
+  height: 100px;
+  width: 100%;
+}
+.outer {
+  height: 1500px;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+.outerscanimage {
+  height: 200px;
+  border: 1px solid #4D79A9;
+  background-color: 
+  width: 1800px;
+  display: flex;
+  align-items: center;
+  justify-content: space-evenly;
+
+}
+.scanimage {
+  border: 1px solid #4D79A9;
+
+  background-color: #f0f0f0;
+  height: 150px;
+  width: 150px;
 }

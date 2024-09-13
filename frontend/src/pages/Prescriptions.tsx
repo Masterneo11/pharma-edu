@@ -1,6 +1,7 @@
 
 import React, { useState, useEffect } from 'react';
 import NameField from '../components/NameField';
+import FetchPrescriptions from '../components/FetchPrescriptions;';
 
 interface Prescription {
     rx_number: number;
@@ -176,50 +177,142 @@ const PrescriptionManagement: React.FC = () => {
         }
     };
 
-    // const handleFormChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
-    //     const { name, value } = e.target;
-    //     switch (name) {
-    //         case 'rx_number':
-    //             setRxNumber(Number(value));
-    //             break;
-    //         case 'directions':
-    //             setDirections(value);
-    //             break;
-    //         case 'quantity':
-    //             setQuantity(Number(value));
-    //             break;
-    //         case 'refills':
-    //             setRefills(Number(value));
-    //             break;
-    //         case 'tech_initials':
-    //             setTechInitials(value);
-    //             break;
-    //         case 'patient_id':
-    //             setPatientId(Number(value));
-    //             break;
-    //         case 'prescriber_id':
-    //             setPrescriberId(Number(value));
-    //             break;
-    //         case 'prescribed_date':
-    //             setPrescribedDate(value);
-    //             break;
-    //         case 'rx_item_id':
-    //             setRxItemId(Number(value));
-    //             break;
-    //         case 'quantity_dispensed':
-    //             setQuantityDispensed(Number(value));
-    //             break;
-    //         case 'status':
-    //             setStatus(value);
-    //             break;
-    //         default:
-    //             break;
-    //     }
-    // };
-
     return (
-        <>
-            <div className='homeformat'>
+        <div className='outer'>
+            <div className='outerscanimage'>
+                <div className='scanimage '> scaned image</div>
+                <div className='scanimage '> scaned image</div>
+                <div className='scanimage '> scaned image</div>
+                <div className='scanimage '> scaned image</div>
+
+            </div>
+            <div className="homeformater">
+                <div>
+                    <h2>Prescription Management</h2>
+
+                    <div
+                        className="scrollable-rx-list bg-light border rounded p-3"
+                        style={{ maxWidth: '800px', maxHeight: '400px', overflowY: 'auto', scrollBehavior: 'smooth' }}
+                    >
+                        {prescriptions.length === 0 ? (
+                            <p>No prescriptions found</p>
+                        ) : (
+                            prescriptions.map((prescription) => (
+                                <div
+                                    className="mb-3 p-3 bg-white border rounded shadow-sm"
+                                    key={prescription.rx_number}
+                                    onClick={() => console.log(`Selected Prescription: ${prescription.rx_number}`)} // Just logging on click, no auto-population
+                                >
+                                    <div className="row">
+                                        <div className="col-sm-3">
+                                            <p className="fw-bold">Rx Number:</p>
+                                            <p>{prescription.rx_number}</p>
+                                        </div>
+                                        <div className="col-sm-3">
+                                            <p className="fw-bold">First Name:</p>
+                                            <p>{prescription.first_name}</p>
+                                        </div>
+                                        <div className="col-sm-3">
+                                            <p className="fw-bold">Last Name:</p>
+                                            <p>{prescription.last_name}</p>
+                                        </div>
+                                        <div className="col-sm-3">
+                                            <p className="fw-bold">Date of Birth:</p>
+                                            <p>{prescription.date_of_birth}</p>
+                                        </div>
+                                    </div>
+
+                                    <div className="d-flex justify-content-end">
+                                        <button onClick={() => handleEdit(prescription)} className="btn btn-primary me-2">
+                                            Edit
+                                        </button>
+                                        <button onClick={() => handleDelete(prescription.rx_number)} className="btn btn-danger">
+                                            Delete
+                                        </button>
+                                    </div>
+                                </div>
+                            ))
+                        )}
+
+                    </div>
+
+                    {/* Edit form will always be present and won't auto-populate */}
+                    <form onSubmit={handleEditSubmit} className="mt-4">
+                        <div className="row mt-2">
+                            <div className="col-md-6">
+                                <NameField
+                                    Name="Patient ID"
+                                    value={patientId}
+                                    onChange={(e) => setPatientId(Number(e.target.value))}
+                                    className="Rad"
+                                />
+                                <NameField
+                                    Name="Doctor ID"
+                                    value={prescriberId}
+                                    onChange={(e) => setPrescriberId(Number(e.target.value))}
+                                    className="Rad"
+                                />
+                            </div>
+                        </div>
+                        <NameField
+                            Name="Prescribed Date"
+                            value={prescribedDate}
+                            onChange={(e) => setPrescribedDate(e.target.value)}
+                            className="Rad"
+                        />
+                        <NameField
+                            Name="Rx Item ID"
+                            value={rxItemId}
+                            onChange={(e) => setRxItemId(Number(e.target.value))}
+                            className="Rad"
+                        />
+                        <NameField
+                            Name="Directions"
+                            value={directions}
+                            onChange={(e) => setDirections(e.target.value)}
+                            className="Rad"
+                        />
+                        <NameField
+                            Name="Quantity"
+                            value={quantity}
+                            onChange={(e) => setQuantity(Number(e.target.value))}
+                            className="Rad"
+                        />
+                        <NameField
+                            Name="Quantity Dispensed"
+                            value={quantityDispensed}
+                            onChange={(e) => setQuantityDispensed(Number(e.target.value))}
+                            className="Rad"
+                        />
+                        <NameField
+                            Name="Refills"
+                            value={refills}
+                            onChange={(e) => setRefills(Number(e.target.value))}
+                            className="Rad"
+                        />
+                        <NameField
+                            Name="Status"
+                            value={status}
+                            onChange={(e) => setStatus(e.target.value)}
+                            className="Rad"
+                        />
+                        <NameField
+                            Name="Tech Initials"
+                            value={techInitials}
+                            onChange={(e) => setTechInitials(e.target.value)}
+                            className="Rad"
+                        />
+                        <button type="submit" className="btn btn-primary mt-3">
+                            Save Changes
+                        </button>
+                    </form>
+                </div>
+
+            </div >
+            <div className='extraspace'>
+
+            </div>
+            {/* <div className='homeformater'>
                 <div>
                     <h2>Prescription Management</h2>
 
@@ -283,8 +376,9 @@ const PrescriptionManagement: React.FC = () => {
                         </form>
                     )}
                 </div>
-            </div>
-        </>
+
+            </div> */}
+        </div>
     );
 };
 

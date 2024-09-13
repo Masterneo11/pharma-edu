@@ -3,6 +3,8 @@ import NameField from '../components/NameField';
 import Save from '../SaveInfo';
 import StateDropdown from '../components/StatedDropdown';
 import '../PatientPage.css';
+import FetchPrescriptions from '../components/FetchPrescriptions;';
+
 
 interface Patient {
     id: number;
@@ -220,6 +222,8 @@ const NewPatient: React.FC = () => {
                     <NameField Name='BIN' value={bin} onChange={(e) => setBin(e.target.value)} className="Rad" />
                     <NameField Name='PCN' value={pcn} onChange={(e) => setPCN(e.target.value)} className="Rad" />
                     <NameField Name='Person Code' value={personCode} onChange={(e) => setPersonCode(e.target.value)} className="Rad" />
+                    {/* <FetchPrescriptions /> */}
+
                     <NameField Name='Prescriptions' value={prescriptions} onChange={(e) => setPrescriptions(e.target.value)} className="Rad" />
                 </div>
             </div>
@@ -264,6 +268,7 @@ const NewPatient: React.FC = () => {
                         </div>
                     </div>
                 </div>
+
             </div>
         </div>
     );
