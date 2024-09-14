@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import NameField from '../components/NameField';
 import Save from '../SaveInfo';
 import StateDropdown from '../components/StatedDropdown';
-import '../PatientPage.css';
+import './NewPatient.css';
 import FetchPrescriptions from '../components/FetchPrescriptions;';
 
 
@@ -210,7 +210,7 @@ const NewPatient: React.FC = () => {
                     <StateDropdown selectedState={state} onChange={(e) => setState(e.target.value)} />
                     <NameField Name='Zipcode' value={zipcode} onChange={(e) => setZipCode(e.target.value)} className="Rad" />
                 </div>
-                <div className='bottomfields-rr'>
+                <div className='bottomfieldsrr'>
                     <Save Save={editingPatientId ? 'Update' : 'Save'} onClick={handleSave} />
                 </div>
             </div>
