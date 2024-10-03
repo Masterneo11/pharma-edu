@@ -1,5 +1,6 @@
 import Home from "./pages/Home";
 import NewRx from "./pages/NewRx";
+import SignIn from "./pages/SignIn";
 import Patient from "./pages/PatientProfile";
 import Doctors from "./pages/Doctors";
 import medsprofile from "./pages/RxItem";
@@ -47,6 +48,11 @@ const routes: PharmacyRoutes[] = [
     name: "prescriptions",
     path: "/prescriptions",
     component: prescriptions,
+  },
+  {
+    name: "sign",
+    path: "/SignIN",
+    component: SignIn,
   }
 
 ];

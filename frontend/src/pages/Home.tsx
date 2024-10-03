@@ -9,11 +9,14 @@ const Home: React.FC = () => {
       <div className="fading-div"></div>
       <div className="overlay"> Pharmacy Interface Practice </div>
 
-      <div className="overlays"> have fun </div>
+      {/* <div className="overlays"> have fun </div> */}
     </div>
 
-      <button className="overlayss"> Log In </button>
+      {/* <button className="overlayss"> Log In </button> */}
 
+      <a href='/SignIN'>
+        <button className="btn btn-primary LoginButton "> Log In </button>
+      </a>
       <div className='hm'>
       </div>
     </div>
